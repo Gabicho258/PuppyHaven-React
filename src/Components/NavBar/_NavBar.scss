@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.nav {
+    background-color: #FCB8A9;
+}
+
+.nav__ul-li {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+
+    &-name {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        padding-right: 1rem;
+    }
+
+    &-avatar {
+        display: inline-block;
+
+    }
+
+    &:last-child {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-content: center
+    }
+}
+
+
+.nav__ul {
+    padding: 20px;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center
+}
