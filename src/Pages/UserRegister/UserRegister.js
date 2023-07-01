@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import React from "react";
+
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
@@ -12,16 +10,7 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import "./_UserRegister.scss";
 
 export const UserRegister = () => {
-  const handleRegister = async ({ target }) => {
-    const userToRegister = {
-      first_name: target[0].value,
-      last_name: target[2].value,
-      email: target[4].value,
-      password: target[6].value,
-      phone: target[8].value,
-      dni: target[10].value,
-    };
-  };
+  const handleRegister = async ({ target }) => {};
   return (
     <div className="registerContainer">
       <div className="registerContainer__formContainer">
