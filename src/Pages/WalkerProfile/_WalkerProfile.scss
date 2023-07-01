@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff7df;
+}
+
+section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.right {
+  // display: inline-block;
+}
+
+.left {
+  &__user {
+    display: flex;
+    flex-direction: row;
+    &-avatar {
+      margin: 40px;
+    }
+    &-info {
+      margin: 30px;
+      &-name {
+        font-size: 40px;
+        margin: 15px 0 15px 0;
+      }
+      &-list {
+        font-size: 20px;
+      }
+    }
+  }
+  &__divider {
+    margin: 0 40px 0 40px;
+  }
+  &__description {
+    margin: 40px;
+    &-title {
+      font-size: 30px;
+    }
+    &-des {
+      text-align: justify;
+      margin-top: 25px;
+      font-size: 25px;
+    }
+  }
+}

@@ -5,9 +5,10 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 // import Counter from "./Counter";
 import { NavBar } from "./Components/NavBar/NavBar";
+import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<React.StrictMode>{<NavBar />}</React.StrictMode>);
+root.render(<React.StrictMode>{<WalkerProfile />}</React.StrictMode>);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
