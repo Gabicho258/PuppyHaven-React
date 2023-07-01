@@ -1,14 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-
+import { StyledEngineProvider } from "@mui/material/styles";
 import reportWebVitals from "./reportWebVitals";
 // import Counter from "./Counter";
 import { NavBar } from "./Components/NavBar/NavBar";
-import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
+import { UserRegister } from "./Pages/UserRegister/UserRegister";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<React.StrictMode>{<WalkerProfile />}</React.StrictMode>);
+root.render(
+  <React.StrictMode>
+    {
+      <StyledEngineProvider injectFirst>
+        <UserRegister />
+      </StyledEngineProvider>
+    }
+  </React.StrictMode>
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
