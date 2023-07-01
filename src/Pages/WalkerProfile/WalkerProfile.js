@@ -16,31 +16,24 @@ export const WalkerProfile = () => {
     "Jose Luis Bustamante y Rivero",
     "Novato",
   ];
-  /*
-  const walkerInfo = {
-    age: 18,
-    occupation: "Estudiante",
-    district: "Jose Luis Bustamante y Rivero",
-    rank: "Novato",
-  };
-  */
   const walkerAvailability = {
-    monday: "15:00 - 18:00",
-    tuesday: "",
-    wednesday: "14:00 - 17:00",
-    thursday: "",
-    friday: "",
-    saturday: "12:00 - 1:30",
-    sunday: "",
+    lunes: "15:00 - 18:00",
+    martes: "15:00 - 18:00",
+    miercoles: "14:00 - 17:00",
+    jueves: "15:00 - 18:00",
+    viernes: "15:00 - 18:00",
+    sabado: "12:00 - 1:30",
+    domingo: "15:00 - 18:00",
   };
+  // const walkerAvailability = undefined;
   const days = [
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-    "sunday",
+    "lunes",
+    "martes",
+    "miercoles",
+    "jueves",
+    "viernes",
+    "sabado",
+    "domingo",
   ];
 
   return (
@@ -80,9 +73,15 @@ export const WalkerProfile = () => {
             </p>
           </div>
           <div className="left__buttons">
-            <Button variant="contained">Retroceder</Button>
-            <Button variant="contained">Hacer una cita</Button>
-            <Button variant="contained">Ver Comentarios</Button>
+            <Button variant="contained" className="left__buttons-btn">
+              Retroceder
+            </Button>
+            <Button variant="contained" className="left__buttons-btn">
+              Hacer una cita
+            </Button>
+            <Button variant="contained" className="left__buttons-btn">
+              Ver Comentarios
+            </Button>
           </div>
         </div>
         <div className="right">
@@ -94,25 +93,31 @@ export const WalkerProfile = () => {
               </tr>
             </thead>
             <tbody>
-              {days.map((item) => {
-                if (walkerAvailability[item] === "") return <></>;
-                return (
-                  <tr>
-                    <td>{item}</td>
-                    <td>{walkerAvailability[item]}</td>
-                  </tr>
-                );
-              })}
+              {walkerAvailability ? (
+                days.map((item) => {
+                  if (walkerAvailability[item] === "") return <></>;
+                  return (
+                    <tr>
+                      <td>{item}</td>
+                      <td>{walkerAvailability[item]}</td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={2}>El usuario no tiene horarios disponibles</td>
+                </tr>
+              )}
             </tbody>
           </table>
-          <div className="rigth__userCalification">
-            <div className="rigth__userCalification-likes">
-              <ThumbUpIcon />
+          <div className="right__userCalification">
+            <div className="right__userCalification-likes">
+              <ThumbUpIcon className="right__userCalification-likes-icon" />
               <p>{likes}</p>
               <p>Me gusta</p>
             </div>
-            <div className="rigth__userCalification-dislikes">
-              <ThumbDownIcon />
+            <div className="right__userCalification-dislikes">
+              <ThumbDownIcon className="right__userCalification-dislikes-icon" />
               <p>{dislikes}</p>
               <p>No me gusta</p>
             </div>

@@ -6,13 +6,14 @@ import reportWebVitals from "./reportWebVitals";
 // import Counter from "./Counter";
 import { NavBar } from "./Components/NavBar/NavBar";
 import { UserRegister } from "./Pages/UserRegister/UserRegister";
+import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {
       <StyledEngineProvider injectFirst>
-        <UserRegister />
+        <WalkerProfile />
       </StyledEngineProvider>
     }
   </React.StrictMode>
