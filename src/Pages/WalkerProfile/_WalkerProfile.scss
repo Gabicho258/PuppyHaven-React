@@ -4,11 +4,8 @@
   box-sizing: border-box;
 }
 
-body {
-  background-color: #fff7df;
-}
-
 section {
+  background-color: #fff7df;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
