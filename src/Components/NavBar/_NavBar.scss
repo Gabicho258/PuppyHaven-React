@@ -5,6 +5,7 @@
 
 .nav {
     background-color: #FCB8A9;
+    width: 100vw;
 }
 
 .nav__ul-li {
@@ -36,7 +37,7 @@
 
 
 .nav__ul {
-    padding: 20px;
+    padding: 20px 0;
     width: 100vw;
     display: flex;
     flex-direction: row;
