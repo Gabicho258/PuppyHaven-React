@@ -6,13 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 // import Counter from "./Counter";
 import { NavBar } from "./Components/NavBar/NavBar";
 import { UserRegister } from "./Pages/UserRegister/UserRegister";
+import { HomePageUser } from "./Pages/HomePageUser/HomePageUser";
+import { WalkerCard } from "./Components/WalkerCard/WalkerCard";
+import { PetCard } from "./Components/PetCard/PetCard";
+import { HomeAdoptPet } from "./Pages/HomeAdoptPet/HomeAdoptPet";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {
       <StyledEngineProvider injectFirst>
-        <UserRegister />
+        <HomePageUser />
       </StyledEngineProvider>
     }
   </React.StrictMode>
