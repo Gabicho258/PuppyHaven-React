@@ -8,13 +8,14 @@ import { NavBar } from "./Components/NavBar/NavBar";
 import { UserRegister } from "./Pages/UserRegister/UserRegister";
 import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
 import { UserLogin } from "./Pages/UserLogin/UserLogin";
+import { GiveUpPetAdoption } from "./Pages/GiveUpPetAdoption/GiveUpPetAdoption";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {
       <StyledEngineProvider injectFirst>
-        <UserLogin />
+        <GiveUpPetAdoption />
       </StyledEngineProvider>
     }
   </React.StrictMode>
