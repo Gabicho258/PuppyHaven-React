@@ -6,9 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 // import Counter from "./Counter";
 import { NavBar } from "./Components/NavBar/NavBar";
 import { UserRegister } from "./Pages/UserRegister/UserRegister";
+
 import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
 import { UserLogin } from "./Pages/UserLogin/UserLogin";
 import { GiveUpPetAdoption } from "./Pages/GiveUpPetAdoption/GiveUpPetAdoption";
+
+import { HomePageUser } from "./Pages/HomePageUser/HomePageUser";
+import { WalkerCard } from "./Components/WalkerCard/WalkerCard";
+import { PetCard } from "./Components/PetCard/PetCard";
+import { HomeAdoptPet } from "./Pages/HomeAdoptPet/HomeAdoptPet";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
