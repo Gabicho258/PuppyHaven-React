@@ -1,4 +1,10 @@
+body {
+    overflow-x: hidden;
+}
+
 .adoptContainer {
+    // width: 100vw;
+
     &__title {
         text-align: center;
         margin: 1rem 0;

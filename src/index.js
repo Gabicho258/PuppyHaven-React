@@ -1,28 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "./_index.scss";
 import { StyledEngineProvider } from "@mui/material/styles";
 import reportWebVitals from "./reportWebVitals";
 // import Counter from "./Counter";
-import { NavBar } from "./Components/NavBar/NavBar";
-import { UserRegister } from "./Pages/UserRegister/UserRegister";
 
-import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
-import { UserLogin } from "./Pages/UserLogin/UserLogin";
-import { GiveUpPetAdoption } from "./Pages/GiveUpPetAdoption/GiveUpPetAdoption";
-
-import { HomePageUser } from "./Pages/HomePageUser/HomePageUser";
-import { WalkerCard } from "./Components/WalkerCard/WalkerCard";
-import { PetCard } from "./Components/PetCard/PetCard";
-import { HomeAdoptPet } from "./Pages/HomeAdoptPet/HomeAdoptPet";
-
+import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {
       <StyledEngineProvider injectFirst>
-        <GiveUpPetAdoption />
+        <App />
       </StyledEngineProvider>
     }
   </React.StrictMode>

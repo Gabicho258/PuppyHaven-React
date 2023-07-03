@@ -148,7 +148,7 @@ export const HomeAdoptPet = () => {
   ];
   return (
     <>
-      <NavBar />;
+      <NavBar />
       <div className="adoptContainer">
         <div className="adoptContainer__title">
           <Typography variant="h4">¡Adopta!</Typography>

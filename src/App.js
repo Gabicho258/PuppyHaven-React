@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { UserLogin } from "./Pages/UserLogin/UserLogin";
+import { UserRegister } from "./Pages/UserRegister/UserRegister";
+import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
+import { GiveUpPetAdoption } from "./Pages/GiveUpPetAdoption/GiveUpPetAdoption";
+import { HomePageUser } from "./Pages/HomePageUser/HomePageUser";
+import { HomeAdoptPet } from "./Pages/HomeAdoptPet/HomeAdoptPet";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/register" element={<UserRegister />} />
+        <Route path="/walker-profile" element={<WalkerProfile />} />
+        <Route
+          path="/give-up-a-pet-for-adoption"
+          element={<GiveUpPetAdoption />}
+        />
+        <Route path="/home-page-user" element={<HomePageUser />} />
+        <Route path="/adopt-pet" element={<HomeAdoptPet />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

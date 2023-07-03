@@ -5,12 +5,19 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router";
 
 import "./_WalkerCard.scss";
 
-export const WalkerCard = ({ userName, userDesc }) => {
+export const WalkerCard = ({ userName, userDesc, id = "" }) => {
+  const navigate = useNavigate();
+
   return (
-    <Card className="walkerCard" sx={{ display: "flex" }}>
+    <Card
+      className="walkerCard"
+      sx={{ display: "flex" }}
+      onClick={() => navigate(`/walker-profile/${id}`)}
+    >
       <CardMedia
         component="img"
         sx={{ width: 200 }}

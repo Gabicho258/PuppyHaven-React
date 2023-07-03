@@ -3,6 +3,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./_UserLogin.scss";
+import { Link } from "react-router-dom";
 
 export const UserLogin = () => {
   return (
@@ -32,9 +33,10 @@ export const UserLogin = () => {
               className="loginForm__password-input"
             />
           </div>
-          <a href="#" className="loginForm__link">
+
+          <Link to="/register" className="loginForm__link">
             ¿Quieres crear una cuenta?
-          </a>
+          </Link>
           <Button variant="contained" className="loginForm__btn">
             Iniciar Sesión
           </Button>
