@@ -44,6 +44,8 @@ import {
   getTramitesByUserAdopterCode,
   getTramitesByUserOwnerCode,
 } from "../../api/tramites.api";
+import { getAllMascotasAsync } from "../../slices/mascotas.slice";
+import { useDispatch, useSelector } from "react-redux";
 // import {
 //   createWalker,
 //   deleteWalker,
@@ -54,6 +56,7 @@ import {
 // } from "../../api/paseadores.api.js";
 
 export const Test = () => {
+  const dispatch = useDispatch();
   const handleClick = async () => {
     // console.log(await createCalificacion());
     // console.log(await getAllCalificaciones());
@@ -194,7 +197,11 @@ export const Test = () => {
     // );
     // console.log(await deleteWalker(5));
     // console.log(await getWalkerByCode(5));
+    await dispatch(getAllMascotasAsync());
   };
+
+  const mascotas = useSelector((state) => state.mascotas.mascotas);
+  console.log(mascotas);
   return (
     <div>
       Test

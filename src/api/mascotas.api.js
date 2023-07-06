@@ -92,7 +92,7 @@ export const updateMascota = async (mascota) => {
   }
 };
 
-export const getMascotaByUserCode = async (userCode) => {
+export const getMascotasByUserCode = async (userCode) => {
   const path = `${API_SERVER}${END_POINTS.GET_BY_USER_CODE}${userCode}`;
   try {
     const response = await fetch(path);
