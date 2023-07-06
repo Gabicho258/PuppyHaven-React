@@ -5,11 +5,13 @@ import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
 import { GiveUpPetAdoption } from "./Pages/GiveUpPetAdoption/GiveUpPetAdoption";
 import { HomePageUser } from "./Pages/HomePageUser/HomePageUser";
 import { HomeAdoptPet } from "./Pages/HomeAdoptPet/HomeAdoptPet";
+import { Test } from "./Pages/Test/Test";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Test />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/register" element={<UserRegister />} />
         <Route path="/walker-profile" element={<WalkerProfile />} />

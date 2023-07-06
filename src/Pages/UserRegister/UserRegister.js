@@ -11,12 +11,37 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import "./_UserRegister.scss";
-import { login1, login2 } from "../../api/user.api";
+// import { login } from "../../api/user.api";
 
 export const UserRegister = () => {
   const handleRegister = async ({ target }) => {
-    const resolve = await login1();
-    console.log(resolve);
+    const userToRegister = {
+      usuNom: target[2].value,
+      usuCor: target[6].value,
+      usuCon: target[14].value,
+      disCod: 1,
+      usuFotURL: "",
+      usuFecNacAno: 2002,
+      usuFecNacMes: 10,
+      usuFecNacDia: 12,
+    };
+    console.log(new Date(target[10].value).getDay());
+    console.log(new Date(target[10].value).getMonth());
+    console.log(new Date(target[10].value).getYear());
+    console.log(new Date(target[10].value));
+    // console.log(userToRegister);
+    //   {
+    //     "usuNom": "Edson10",
+    //     "usuCor": "correo@tes1t1.com",
+    //     "usuCon": "contrasena10",
+    //     "disCod": 1,
+    //     "usuFotURL": "https://rincondelvago.com",
+    //     "usuFecNacAno": 2002,
+    //     "usuFecNacMes": 10,
+    //     "usuFecNacDia": 12
+    // }
+    // const resolve = await login();
+    // console.log(resolve);
   };
 
   return (
