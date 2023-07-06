@@ -4,6 +4,10 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./_UserLogin.scss";
 import { Link } from "react-router-dom";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
 
 export const UserLogin = () => {
   return (
@@ -11,6 +15,28 @@ export const UserLogin = () => {
       <div className="container">
         <form className="loginForm">
           <PersonIcon className="loginForm__icon"></PersonIcon>
+          <div className="loginForm__userType">
+            <FormControl className="loginForm__userType-formControl">
+              <RadioGroup
+                row
+                name="userType"
+                defaultValue="usuario"
+                className="loginForm__userType-formControl-radioGroup"
+              >
+                <FormControlLabel
+                  value="usuario"
+                  control={<Radio />}
+                  label="Usuario:"
+                />
+
+                <FormControlLabel
+                  value="paseador"
+                  control={<Radio />}
+                  label="Paseador:"
+                />
+              </RadioGroup>
+            </FormControl>
+          </div>
           <div className="loginForm__mail">
             <label for="email" className="loginForm__mail-label">
               Correo o Nombre de Usuario:

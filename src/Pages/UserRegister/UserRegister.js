@@ -6,11 +6,19 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 import "./_UserRegister.scss";
+import { login1, login2 } from "../../api/user.api";
 
 export const UserRegister = () => {
-  const handleRegister = async ({ target }) => {};
+  const handleRegister = async ({ target }) => {
+    const resolve = await login1();
+    console.log(resolve);
+  };
+
   return (
     <div className="registerContainer">
       <div className="registerContainer__formContainer">
@@ -37,6 +45,26 @@ export const UserRegister = () => {
               noValidate
               autoComplete="off"
             >
+              <FormControl className="loginForm__userType-formControl">
+                <RadioGroup
+                  row
+                  name="userType"
+                  defaultValue="usuario"
+                  className="loginForm__userType-formControl-radioGroup"
+                >
+                  <FormControlLabel
+                    value="usuario"
+                    control={<Radio />}
+                    label="Usuario:"
+                  />
+
+                  <FormControlLabel
+                    value="paseador"
+                    control={<Radio />}
+                    label="Paseador:"
+                  />
+                </RadioGroup>
+              </FormControl>
               <TextField
                 style={{ width: "44%" }}
                 required

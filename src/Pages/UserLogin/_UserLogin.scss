@@ -22,36 +22,62 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  &__userType {
+    // width: 100%;
+    text-align: center;
+    margin-bottom: 1rem;
+    width: 25rem;
+
+    &-formControl {
+      width: 20rem;
+
+      &-radioGroup {
+        display: flex;
+        justify-content: space-evenly;
+
+      }
+    }
+  }
+
   &__icon {
     font-size: 15rem;
   }
+
   &__mail {
     width: 60%;
     margin-bottom: 1rem;
+
     &-label {
       font-weight: bold;
       display: block;
       margin-bottom: 0.5rem;
     }
+
     &-input {
       width: 100%;
     }
   }
+
   &__password {
     width: 60%;
     margin-bottom: 1rem;
+
     &-label {
       font-weight: bold;
       display: block;
       margin-bottom: 0.5rem;
     }
+
     &-input {
       width: 100%;
     }
   }
+
   &__link {
     margin-bottom: 1rem;
   }
+
   &__btn {
     width: 15rem;
   }

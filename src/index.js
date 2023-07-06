@@ -6,14 +6,18 @@ import reportWebVitals from "./reportWebVitals";
 // import Counter from "./Counter";
 
 import App from "./App";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {
-      <StyledEngineProvider injectFirst>
-        <App />
-      </StyledEngineProvider>
+      <Provider store={store}>
+        <StyledEngineProvider injectFirst>
+          <App />
+        </StyledEngineProvider>
+      </Provider>
     }
   </React.StrictMode>
 );
