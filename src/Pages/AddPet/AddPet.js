@@ -42,7 +42,7 @@ export const AddPet = () => {
             <label className="addPetContainer__left-item-label">Edad:</label>
             <TextField
               inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-              type="text"
+              type="number"
             />
           </div>
           <div className="addPetContainer__left-item">
@@ -63,6 +63,7 @@ export const AddPet = () => {
             </Button>
           </div>
         </div>
+
         <div className="right">
           <div>
             <Box

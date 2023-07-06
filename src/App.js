@@ -24,7 +24,7 @@ const App = () => {
           element={<GiveUpPetAdoption />}
         />
         <Route path="/add-pet" element={<AddPet />} />
-        <Route path="/home-page-user" element={<HomePageUser />} />
+        <Route path="/search-walkers" element={<HomePageUser />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/adopt-pet" element={<HomeAdoptPet />} />
       </Routes>

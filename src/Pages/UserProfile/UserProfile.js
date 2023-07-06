@@ -5,18 +5,19 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import { PetCard } from "../../Components/PetCard/PetCard";
+import { Link, useNavigate } from "react-router-dom";
 import "./_UserProfile.scss";
 
 export const UserProfile = () => {
   const name = "Gabriel Steven Machicao Quispe";
   const walkerInfo = [18, "Estudiante", "Jose Luis Bustamante y Rivero"];
-
+  const navigate = useNavigate();
   // const walkerAvailability = undefined;
 
   return (
     <>
       <NavBar />
-      <section className="section-p">
+      <div className="section-p">
         <div className="left">
           <div className="left__user">
             <Avatar
@@ -41,20 +42,25 @@ export const UserProfile = () => {
             <Button variant="contained" className="left__buttons-btn">
               Editar perfil
             </Button>
-            <Button variant="contained" className="left__buttons-btn">
+            <Button
+              variant="contained"
+              className="left__buttons-btn"
+              onClick={() => navigate("/add-pet")}
+            >
               Añadir mascota
             </Button>
           </div>
         </div>
-      </section>
-      <section className="section-pets">
+      </div>
+
+      <div className="section-pets">
         <h3 className="pets-title">Mis mascotas</h3>
         <div className="pets">
           <PetCard />
           <PetCard />
           <PetCard />
         </div>
-      </section>
+      </div>
     </>
   );
 };
