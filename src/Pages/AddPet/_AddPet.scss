@@ -1,0 +1,26 @@
+.pageTitle {
+  text-align: center;
+  margin: 1.5rem 0 1.5rem 0;
+  color: #080201;
+}
+
+.addPetContainer {
+  margin: 5rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  border-radius: 10px;
+  background-color: #faf2db;
+  padding: 3rem;
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    &-item {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

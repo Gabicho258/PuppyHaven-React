@@ -66,6 +66,9 @@ export const UserLogin = () => {
           <Button variant="contained" className="loginForm__btn">
             Iniciar Sesión
           </Button>
+          <Link to="/" className="loginForm__link">
+            Cancelar
+          </Link>
         </form>
       </div>
     </>

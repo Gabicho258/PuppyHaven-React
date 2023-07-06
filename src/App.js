@@ -5,19 +5,27 @@ import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
 import { GiveUpPetAdoption } from "./Pages/GiveUpPetAdoption/GiveUpPetAdoption";
 import { HomePageUser } from "./Pages/HomePageUser/HomePageUser";
 import { HomeAdoptPet } from "./Pages/HomeAdoptPet/HomeAdoptPet";
+import { Home } from "./Pages/Home/Home";
+import { UserProfile } from "./Pages/UserProfile/UserProfile";
+import { AddPet } from "./Pages/AddPet/AddPet";
+import { WalkerProfileAccount } from "./Pages/WalkerProfileAccount/WalkerProfileAccount";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="/register" element={<UserRegister />} />
         <Route path="/walker-profile" element={<WalkerProfile />} />
+        <Route path="/walker-profile/id" element={<WalkerProfileAccount />} />
         <Route
           path="/give-up-a-pet-for-adoption"
           element={<GiveUpPetAdoption />}
         />
+        <Route path="/add-pet" element={<AddPet />} />
         <Route path="/home-page-user" element={<HomePageUser />} />
+        <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/adopt-pet" element={<HomeAdoptPet />} />
       </Routes>
     </BrowserRouter>
