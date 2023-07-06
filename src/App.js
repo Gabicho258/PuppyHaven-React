@@ -5,16 +5,22 @@ import { WalkerProfile } from "./Pages/WalkerProfile/WalkerProfile";
 import { GiveUpPetAdoption } from "./Pages/GiveUpPetAdoption/GiveUpPetAdoption";
 import { HomePageUser } from "./Pages/HomePageUser/HomePageUser";
 import { HomeAdoptPet } from "./Pages/HomeAdoptPet/HomeAdoptPet";
+
 import { Home } from "./Pages/Home/Home";
 import { UserProfile } from "./Pages/UserProfile/UserProfile";
 import { AddPet } from "./Pages/AddPet/AddPet";
 import { WalkerProfileAccount } from "./Pages/WalkerProfileAccount/WalkerProfileAccount";
 
+import { Test } from "./Pages/Test/Test";
+
+
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route path="/" element={<Home />} />
+
         <Route path="/login" element={<UserLogin />} />
         <Route path="/register" element={<UserRegister />} />
         <Route path="/walker-profile" element={<WalkerProfile />} />
