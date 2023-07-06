@@ -4,7 +4,6 @@ import { Typography } from "@mui/material";
 
 import "./_HomePageUser.scss";
 import { WalkerCard } from "../../Components/WalkerCard/WalkerCard";
-
 export const HomePageUser = () => {
   //   ============================
   const walkers = [

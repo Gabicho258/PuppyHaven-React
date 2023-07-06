@@ -1,0 +1,71 @@
+.mainSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100vw;
+  height: 90vh;
+}
+
+.logo {
+  width: 100vw;
+  height: 13rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__icon {
+    font-size: 13rem;
+    color: #00b9a7;
+  }
+}
+
+.phrase {
+  width: 70%;
+  background-color: #e6e6e6;
+  border-radius: 10px;
+  border: 1px solid #cacaca;
+  padding: 2rem;
+  font-size: 2rem;
+  &__content {
+    text-align: center;
+  }
+}
+
+.stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 70%;
+  &__housedPets,
+  &__adoptions,
+  &__walkers,
+  &__walks {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 7px;
+    padding: 0.5rem;
+    min-width: 15rem;
+  }
+  &__housedPets {
+    background-color: #f24822;
+    border: 1px dashed #d4401d;
+  }
+  &__adoptions {
+    background-color: #14ae5c;
+    border: 1px dashed #129c53;
+  }
+  &__walkers {
+    background-color: #0d99ff;
+    border: 1px dashed #0b89e5;
+  }
+  &__walks {
+    background-color: #9747ff;
+    border: 1px dashed #8d52d4;
+  }
+}

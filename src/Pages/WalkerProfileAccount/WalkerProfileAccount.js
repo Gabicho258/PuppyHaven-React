@@ -4,16 +4,16 @@ import Button from "@mui/material/Button";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { NavBar } from "../../Components/NavBar/NavBar";
-import "./_WalkerProfile.scss";
+import "./_WalkerProfileAccount.scss";
 
-export const WalkerProfile = () => {
+export const WalkerProfileAccount = () => {
   const name = "Gabriel Steven Machicao Quispe";
   const likes = 18;
   const dislikes = 7;
   const walkerInfo = [
     18,
     "Jose Luis Bustamante y Rivero",
-    "gmachicaqu@unsa.edu.pe",
+    "gmachicaoqu@unsa.edu.pe",
   ];
   const walkerAvailability = {
     lunes: "15:00 - 18:00",
@@ -71,15 +71,9 @@ export const WalkerProfile = () => {
               viverra. Aliquam id augue ac mauris sagittis semper non a elit.
             </p>
           </div>
-          <div className="left__buttons">
-            <Button variant="contained" className="left__buttons-btn">
-              Retroceder
-            </Button>
-            <Button variant="contained" className="left__buttons-btn">
-              Hacer una cita
-            </Button>
-            <Button variant="contained" className="left__buttons-btn">
-              Ver Comentarios
+          <div className="left__button">
+            <Button variant="contained" className="left__button-btn">
+              <strong>Editar Datos</strong>
             </Button>
           </div>
         </div>
@@ -109,14 +103,19 @@ export const WalkerProfile = () => {
               )}
             </tbody>
           </table>
-          <div className="right__userCalification">
-            <div className="right__userCalification-likes">
-              <ThumbUpIcon className="right__userCalification-likes-icon" />
+
+          <Button variant="contained" className="right__editButton">
+            <strong>Editar Horarios</strong>
+          </Button>
+
+          <div className="right__userCalificationWalker">
+            <div className="right__userCalificationWalker-likes">
+              <ThumbUpIcon className="right__userCalificationWalker-likes-icon" />
               <p>{likes}</p>
               <p>Me gusta</p>
             </div>
-            <div className="right__userCalification-dislikes">
-              <ThumbDownIcon className="right__userCalification-dislikes-icon" />
+            <div className="right__userCalificationWalker-dislikes">
+              <ThumbDownIcon className="right__userCalificationWalker-dislikes-icon" />
               <p>{dislikes}</p>
               <p>No me gusta</p>
             </div>

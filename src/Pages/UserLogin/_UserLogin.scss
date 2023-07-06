@@ -35,7 +35,6 @@
       &-radioGroup {
         display: flex;
         justify-content: space-evenly;
-
       }
     }
   }
@@ -80,5 +79,6 @@
 
   &__btn {
     width: 15rem;
+    margin-bottom: 1rem;
   }
 }
