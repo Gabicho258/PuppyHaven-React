@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import FormControl from "@mui/material/FormControl";
 
@@ -11,38 +11,63 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import "./_UserRegister.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { createUserAsync } from "../../slices/usuarios.slice";
+import { createWalkerAsync } from "../../slices/paseadores.slice";
+import { calificacionesFunctions } from "../../api";
 // import { login } from "../../api/user.api";
-
+const { createCalificacion } = calificacionesFunctions;
 export const UserRegister = () => {
+  const [rol, setRol] = useState("usuario");
+  const dispatch = useDispatch();
+  const userCreated = useSelector((state) => state.usuarios.created);
+  const walkerCreated = useSelector((state) => state.paseadores.created);
   const handleRegister = async ({ target }) => {
+    console.log(rol);
     const userToRegister = {
       usuNom: target[2].value,
       usuCor: target[6].value,
       usuCon: target[14].value,
       disCod: 1,
-      usuFotURL: "",
-      usuFecNacAno: 2002,
-      usuFecNacMes: 10,
-      usuFecNacDia: 12,
+      usuFotURL:
+        "https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png",
+      usuFecNacAno: parseInt(target[10].value.split("-")[0]),
+      usuFecNacMes: parseInt(target[10].value.split("-")[1]),
+      usuFecNacDia: parseInt(target[10].value.split("-")[2]),
     };
-    console.log(new Date(target[10].value).getDay());
-    console.log(new Date(target[10].value).getMonth());
-    console.log(new Date(target[10].value).getYear());
-    console.log(new Date(target[10].value));
-    // console.log(userToRegister);
-    //   {
-    //     "usuNom": "Edson10",
-    //     "usuCor": "correo@tes1t1.com",
-    //     "usuCon": "contrasena10",
-    //     "disCod": 1,
-    //     "usuFotURL": "https://rincondelvago.com",
-    //     "usuFecNacAno": 2002,
-    //     "usuFecNacMes": 10,
-    //     "usuFecNacDia": 12
-    // }
-    // const resolve = await login();
-    // console.log(resolve);
+    const walkerToRegister = {
+      pasNom: target[2].value,
+      pasCor: target[6].value,
+      pasCon: target[14].value,
+      disCod: 3,
+      pasFotURL:
+        "https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png",
+      pasFecNacAno: parseInt(target[10].value.split("-")[0]),
+      pasFecNacMes: parseInt(target[10].value.split("-")[1]),
+      pasFecNacDia: parseInt(target[10].value.split("-")[2]),
+      pasDes: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+        cursus, odio ac hendrerit rutrum, velit nisi finibus justo, sit
+        amet sollicitudin nisl est at urna. Mauris dapibus justo a
+        consequat feugiat. Nulla a magna luctus, lacinia leo id, hendrerit
+        nulla. Sed eu ultrices ligula. Nullam laoreet, metus id commodo
+        viverra, est libero feugiat neque, nec cursus turpis urna vitae
+        erat. Sed in velit risus. Etiam eget augue vitae risus malesuada
+        viverra. Aliquam id augue ac mauris sagittis semper non a elit.`,
+      pasDis: "",
+    };
+    if (rol === "usuario") {
+      await dispatch(createUserAsync(userToRegister));
+    }
+    if (rol === "paseador") {
+      const [{ CalCod: calCod }] = await createCalificacion();
+      dispatch(createWalkerAsync({ ...walkerToRegister, calCod }));
+    }
   };
+  useEffect(() => {
+    if (userCreated || walkerCreated) {
+      window.location.href = "/login";
+    }
+  }, [userCreated, walkerCreated]);
 
   return (
     <div className="registerContainer">
@@ -74,19 +99,25 @@ export const UserRegister = () => {
                 <RadioGroup
                   row
                   name="userType"
-                  defaultValue="usuario"
+                  defaultValue={rol}
                   className="loginForm__userType-formControl-radioGroup"
                 >
                   <FormControlLabel
                     value="usuario"
                     control={<Radio />}
                     label="Usuario:"
+                    onClick={() => {
+                      setRol("usuario");
+                    }}
                   />
 
                   <FormControlLabel
                     value="paseador"
                     control={<Radio />}
                     label="Paseador:"
+                    onClick={() => {
+                      setRol("paseador");
+                    }}
                   />
                 </RadioGroup>
               </FormControl>

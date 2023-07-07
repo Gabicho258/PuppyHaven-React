@@ -26,7 +26,8 @@ export const loginUser = async (user) => {
     }
     return data;
   } catch (error) {
-    return { error: error.message, alert: true };
+    return new PromiseRejectionEvent(error.message);
+    // return { error: error.message, alert: true };
   }
 };
 

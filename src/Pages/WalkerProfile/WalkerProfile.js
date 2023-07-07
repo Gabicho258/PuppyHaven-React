@@ -1,19 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import "./_WalkerProfile.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getWalkerByCodeAsync } from "../../slices/paseadores.slice";
 
 export const WalkerProfile = () => {
-  const name = "Gabriel Steven Machicao Quispe";
-  const likes = 18;
-  const dislikes = 7;
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const walker = useSelector((state) => state.paseadores.walker);
+  const allDistritos = useSelector((state) => state.distritos.allDistritos);
+  const allCalificaciones = useSelector(
+    (state) => state.calificaciones.allCalificaciones
+  );
+  const distrito = allDistritos.filter(
+    (distrito) => walker[0]?.DisCod === distrito.DisCod
+  );
+  const calificacion = allCalificaciones.filter(
+    (calificacion) => walker[0]?.CalCod === calificacion.CalCod
+  );
+
+  const likes = calificacion[0]?.CalMeGus;
+  const dislikes = calificacion[0]?.CalNoGus;
   const walkerInfo = [
-    18,
-    "Jose Luis Bustamante y Rivero",
-    "gmachicaqu@unsa.edu.pe",
+    `${new Date().getFullYear() - walker[0]?.PasFecNacAno} años`,
+    distrito[0]?.DisNom,
+    walker[0]?.PasCor,
   ];
   const walkerAvailability = {
     lunes: "15:00 - 18:00",
@@ -34,6 +50,9 @@ export const WalkerProfile = () => {
     "sabado",
     "domingo",
   ];
+  useEffect(() => {
+    dispatch(getWalkerByCodeAsync(id));
+  }, []);
 
   return (
     <>
@@ -43,13 +62,13 @@ export const WalkerProfile = () => {
           <div className="left__user">
             <Avatar
               className="left__user-avatar"
-              alt={name}
-              src="/static/images/avatar/1.jpg"
+              alt={walker[0]?.PasNom}
+              src={walker[0]?.PasFotURL}
               variant="rounded"
               sx={{ width: 200, height: 200 }}
             />
             <div className="left__user-info">
-              <h3 className="left__user-info-name">{name}</h3>
+              <h3 className="left__user-info-name">{walker[0]?.PasNom}</h3>
               <ul className="left__user-info-list">
                 {walkerInfo.map((item) => (
                   <li>{item}</li>
@@ -60,16 +79,7 @@ export const WalkerProfile = () => {
           <hr className="left__divider"></hr>
           <div className="left__description">
             <h4 className="left__description-title">Descripción</h4>
-            <p className="left__description-des">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              cursus, odio ac hendrerit rutrum, velit nisi finibus justo, sit
-              amet sollicitudin nisl est at urna. Mauris dapibus justo a
-              consequat feugiat. Nulla a magna luctus, lacinia leo id, hendrerit
-              nulla. Sed eu ultrices ligula. Nullam laoreet, metus id commodo
-              viverra, est libero feugiat neque, nec cursus turpis urna vitae
-              erat. Sed in velit risus. Etiam eget augue vitae risus malesuada
-              viverra. Aliquam id augue ac mauris sagittis semper non a elit.
-            </p>
+            <p className="left__description-des">{walker[0]?.PasDes}</p>
           </div>
           <div className="left__buttons">
             <Button variant="contained" className="left__buttons-btn">

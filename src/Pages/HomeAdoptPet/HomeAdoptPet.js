@@ -1,151 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import { Typography } from "@mui/material";
 import { PetCard } from "../../Components/PetCard/PetCard";
 
 import "./_HomeAdoptPet.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMascotasAsync } from "../../slices/mascotas.slice";
 
 export const HomeAdoptPet = () => {
-  const pets = [
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-    {
-      petName: "Tu perrito fiu fiu",
-      petImageURL:
-        "https://static.fundacion-affinity.org/cdn/farfuture/PVbbIC-0M9y4fPbbCsdvAD8bcjjtbFc0NSP3lRwlWcE/mtime:1643275542/sites/default/files/los-10-sonidos-principales-del-perro.jpg",
-      petBreed: "Golden Dog",
-    },
-  ];
+  const dispatch = useDispatch();
+  const mascotas = useSelector((state) => state.mascotas.allMascotas);
+  const pets = mascotas.filter((mascota) => mascota.MasIsToAdo === 1);
+  console.log(mascotas);
+  useEffect(() => {
+    dispatch(getAllMascotasAsync());
+  }, []);
   return (
     <>
       <NavBar />
@@ -155,11 +24,11 @@ export const HomeAdoptPet = () => {
         </div>
 
         <div className="adoptContainer__cards">
-          {pets.map(({ petName, petImageURL, petBreed }) => (
+          {pets.map(({ MasNom, MasFotURL, MasRaz }) => (
             <PetCard
-              petName={petName}
-              petImageURL={petImageURL}
-              petBreed={petBreed}
+              petName={MasNom}
+              petImageURL={MasFotURL}
+              petBreed={MasRaz}
             />
           ))}
         </div>

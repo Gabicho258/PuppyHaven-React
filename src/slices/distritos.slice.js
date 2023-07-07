@@ -39,8 +39,7 @@ export const ditritosSlice = createSlice({
   name: "distritos",
   initialState: {
     allDistritos: [],
-    distritos: [],
-    distritoSelected: {},
+    distrito: {},
   },
   extraReducers: (builder) => {
     builder
@@ -63,7 +62,7 @@ export const ditritosSlice = createSlice({
       })
       .addCase(getDistritoByCodeAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.distritoSelected = action.payload;
+        state.distrito = action.payload;
       }); //Falta un update :)
   },
 });

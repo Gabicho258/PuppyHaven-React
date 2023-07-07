@@ -1,15 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import "./_UserLogin.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserAsync } from "../../slices/usuarios.slice";
+import { loginWalkerAsync } from "../../slices/paseadores.slice";
 
 export const UserLogin = () => {
+  const [rol, setRol] = useState("usuario");
+  const [correo, setCorreo] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userInfoSessionStorage =
+    JSON.parse(sessionStorage.getItem("infoUser")) ?? false;
+  const userIsLoggued = useSelector((state) => state.usuarios.loggued);
+  const walkerIsLoggued = useSelector((state) => state.paseadores.loggued);
+  // const logguedUser = useSelector((state) => state.usuarios.userInfo);
+  // const logguesWalker = useSelector((state) => state.paseadores.walkerInfo);
+  const handleLogin = async () => {
+    const userToLogin = {
+      usuCor: correo,
+      usuCon: password,
+    };
+    const walkerToLogin = {
+      pasCor: correo,
+      pasCon: password,
+    };
+    console.log(userToLogin);
+    if (rol === "usuario") {
+      await dispatch(loginUserAsync(userToLogin));
+    } else {
+      await dispatch(loginWalkerAsync(walkerToLogin));
+    }
+  };
+  useEffect(() => {
+    console.log(userIsLoggued);
+    console.log(walkerIsLoggued);
+    console.log(userInfoSessionStorage);
+    if (userIsLoggued || walkerIsLoggued || userInfoSessionStorage) {
+      navigate("/");
+    }
+  }, [userIsLoggued, walkerIsLoggued]);
   return (
     <>
       <div className="container">
@@ -20,19 +58,25 @@ export const UserLogin = () => {
               <RadioGroup
                 row
                 name="userType"
-                defaultValue="usuario"
+                defaultValue={rol}
                 className="loginForm__userType-formControl-radioGroup"
               >
                 <FormControlLabel
                   value="usuario"
                   control={<Radio />}
                   label="Usuario:"
+                  onClick={() => {
+                    setRol("usuario");
+                  }}
                 />
 
                 <FormControlLabel
                   value="paseador"
                   control={<Radio />}
                   label="Paseador:"
+                  onClick={() => {
+                    setRol("paseador");
+                  }}
                 />
               </RadioGroup>
             </FormControl>
@@ -46,6 +90,10 @@ export const UserLogin = () => {
               id="email"
               type="email"
               className="loginForm__mail-input"
+              value={correo}
+              onChange={({ target }) => {
+                setCorreo(target.value);
+              }}
             />
           </div>
           <div className="loginForm__password">
@@ -54,16 +102,24 @@ export const UserLogin = () => {
             </label>
             <TextField
               required
+              value={password}
               id="password"
               type="password"
               className="loginForm__password-input"
+              onChange={({ target }) => {
+                setPassword(target.value);
+              }}
             />
           </div>
 
           <Link to="/register" className="loginForm__link">
             ¿Quieres crear una cuenta?
           </Link>
-          <Button variant="contained" className="loginForm__btn">
+          <Button
+            variant="contained"
+            className="loginForm__btn"
+            onClick={handleLogin}
+          >
             Iniciar Sesión
           </Button>
           <Link to="/" className="loginForm__link">

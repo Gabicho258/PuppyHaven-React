@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import PetsIcon from "@mui/icons-material/Pets";
 
 import "./_Home.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMascotasAsync } from "../../slices/mascotas.slice";
+import { getAllTramitesAsync } from "../../slices/tramites.slice";
+import { getAllWalkersAsync } from "../../slices/paseadores.slice";
+import { getAllPaseosAsync } from "../../slices/paseos.slice";
 
 export const Home = () => {
-  const housedPetsNum = 45;
-  const adoptions = 51;
-  const walkersNum = 20;
-  const walksNum = 132;
+  const dispatch = useDispatch();
+  const mascotas = useSelector((state) => state.mascotas.allMascotas);
+  const tramites = useSelector((state) => state.tramites.allTramites);
+  const paseadores = useSelector((state) => state.paseadores.allWalkers);
+  const paseos = useSelector((state) => state.paseos.allPaseos);
+  const housedPetsNum = mascotas.map(
+    ({ MasIsToAdo }) => MasIsToAdo === 1
+  ).length;
+  const adoptions = tramites.length;
+  const walkersNum = paseadores.length;
+  const walksNum = paseos.length;
+  useEffect(() => {
+    dispatch(getAllMascotasAsync());
+    dispatch(getAllTramitesAsync());
+    dispatch(getAllWalkersAsync());
+    dispatch(getAllPaseosAsync());
+  }, []);
   return (
     <>
       <NavBar />

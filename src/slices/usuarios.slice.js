@@ -61,8 +61,7 @@ export const usuariosSlice = createSlice({
   name: "usuarios",
   initialState: {
     allUsers: [],
-    users: [],
-    userSelected: {},
+    user: {},
   },
   extraReducers: (builder) => {
     builder
@@ -78,14 +77,14 @@ export const usuariosSlice = createSlice({
       })
       .addCase(createUserAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.created = action.payload;
+        state.created = true;
       })
       .addCase(getUserByCodeAsync.pending, (state) => {
         state.loading = true;
       })
       .addCase(getUserByCodeAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.userSelected = action.payload;
+        state.user = action.payload;
       })
 
       .addCase(deleteUserAsync.pending, (state) => {
@@ -101,12 +100,17 @@ export const usuariosSlice = createSlice({
       })
       .addCase(loginUserAsync.rejected, (state) => {
         state.loading = false;
+        state.loggued = false;
         state.alert = true;
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.userInfo = action.payload;
-        sessionStorage.setItem("infoUser", JSON.stringify(action.payload));
+        state.user = action.payload[0];
+        state.loggued = true;
+        sessionStorage.setItem(
+          "infoUser",
+          JSON.stringify({ id: action.payload[0].UsuCod, rol: "usuario" })
+        );
       });
   }, //Falta un update y login :)
 });

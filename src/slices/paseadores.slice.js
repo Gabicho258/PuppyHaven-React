@@ -62,7 +62,6 @@ export const paseadoresSlice = createSlice({
   initialState: {
     allWalkers: [],
     walker: {},
-    walkerSelected: {},
   },
   extraReducers: (builder) => {
     builder
@@ -78,14 +77,14 @@ export const paseadoresSlice = createSlice({
       })
       .addCase(createWalkerAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.created = action.payload;
+        state.created = true;
       })
       .addCase(getWalkerByCodeAsync.pending, (state) => {
         state.loading = true;
       })
       .addCase(getWalkerByCodeAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.walkerSelected = action.payload;
+        state.walker = action.payload;
       })
       .addCase(deleteWalkerAsync.pending, (state) => {
         state.loading = true;
@@ -99,13 +98,17 @@ export const paseadoresSlice = createSlice({
       })
       .addCase(loginWalkerAsync.rejected, (state) => {
         state.loading = false;
+        state.loggued = false;
         state.alert = true;
       })
       .addCase(loginWalkerAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.walkerInfo = action.payload;
-
-        sessionStorage.setItem("infoUser", JSON.stringify(action.payload));
+        state.walker = action.payload[0];
+        state.loggued = true;
+        sessionStorage.setItem(
+          "infoUser",
+          JSON.stringify({ id: action.payload[0].PasCod, rol: "paseador" })
+        );
       });
   }, //Falta un update y login :)
 });

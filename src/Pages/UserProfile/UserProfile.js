@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -7,12 +7,32 @@ import { NavBar } from "../../Components/NavBar/NavBar";
 import { PetCard } from "../../Components/PetCard/PetCard";
 import { Link, useNavigate } from "react-router-dom";
 import "./_UserProfile.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { getMascotasByUserCodeAsync } from "../../slices/mascotas.slice";
 
 export const UserProfile = () => {
   const name = "Gabriel Steven Machicao Quispe";
-  const walkerInfo = [18, "Estudiante", "Jose Luis Bustamante y Rivero"];
+  const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.usuarios.user);
+  const allDistritos = useSelector((state) => state.distritos.allDistritos);
+  const mascotas = useSelector((state) => state.mascotas.mascotas);
+  const misMascotas = mascotas.filter((mascota) => mascota.MasIsToAdo === 0);
+
+  const distrito = allDistritos.filter(
+    (distrito) => user[0]?.DisCod === distrito.DisCod
+  );
+  const userInfo = [
+    `${new Date().getFullYear() - user[0]?.UsuFecNacAno} años`,
+    user[0]?.UsuCor,
+    distrito[0]?.DisNom,
+  ];
+  console.log(misMascotas);
   // const walkerAvailability = undefined;
+  useEffect(() => {
+    dispatch(getMascotasByUserCodeAsync(userSession.id));
+  }, []);
 
   return (
     <>
@@ -22,15 +42,15 @@ export const UserProfile = () => {
           <div className="left__user">
             <Avatar
               className="left__user-avatar"
-              alt={name}
-              src="/static/images/avatar/1.jpg"
+              alt={user[0]?.UsuNom}
+              src={user[0]?.UsuFotURL}
               variant="rounded"
               sx={{ width: 200, height: 200 }}
             />
             <div className="left__user-info">
-              <h3 className="left__user-info-name">{name}</h3>
+              <h3 className="left__user-info-name">{user[0]?.UsuNom}</h3>
               <ul className="left__user-info-list">
-                {walkerInfo.map((item) => (
+                {userInfo.map((item) => (
                   <li>{item}</li>
                 ))}
               </ul>
@@ -56,9 +76,13 @@ export const UserProfile = () => {
       <div className="section-pets">
         <h3 className="pets-title">Mis mascotas</h3>
         <div className="pets">
-          <PetCard />
-          <PetCard />
-          <PetCard />
+          {mascotas.map((mascota) => (
+            <PetCard
+              petName={mascota.MasNom}
+              petImageURL={mascota.MasFotURL}
+              petBreed={mascota.MasDes}
+            />
+          ))}
         </div>
       </div>
     </>

@@ -13,18 +13,16 @@ import { WalkerProfileAccount } from "./Pages/WalkerProfileAccount/WalkerProfile
 
 import { Test } from "./Pages/Test/Test";
 
-
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route path="/" element={<Home />} />
 
         <Route path="/login" element={<UserLogin />} />
         <Route path="/register" element={<UserRegister />} />
-        <Route path="/walker-profile" element={<WalkerProfile />} />
-        <Route path="/walker-profile/id" element={<WalkerProfileAccount />} />
+        <Route path="/walker-profile" element={<WalkerProfileAccount />} />
+        <Route path="/walker-profile/:id" element={<WalkerProfile />} />
         <Route
           path="/give-up-a-pet-for-adoption"
           element={<GiveUpPetAdoption />}

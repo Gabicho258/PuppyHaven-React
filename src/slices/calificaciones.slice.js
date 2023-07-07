@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CalificacionesFunctions } from "../api/index.js";
+import { calificacionesFunctions } from "../api/index.js";
 
 const {
   getAllCalificaciones,
   createCalificacion,
   getCalificacionByCode,
   updateCalificacion,
-} = CalificacionesFunctions;
+} = calificacionesFunctions;
 
 export const getAllCalificacionesAsync = createAsyncThunk(
   "calificaciones/getAllCalificacionesAsync",
