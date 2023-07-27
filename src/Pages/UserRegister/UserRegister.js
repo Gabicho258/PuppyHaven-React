@@ -15,11 +15,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUserAsync } from "../../slices/usuarios.slice";
 import { createWalkerAsync } from "../../slices/paseadores.slice";
 import { calificacionesFunctions } from "../../api";
+import { useNavigate } from "react-router-dom";
 // import { login } from "../../api/user.api";
 const { createCalificacion } = calificacionesFunctions;
 export const UserRegister = () => {
   const [rol, setRol] = useState("usuario");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userCreated = useSelector((state) => state.usuarios.created);
   const walkerCreated = useSelector((state) => state.paseadores.created);
   const handleRegister = async ({ target }) => {
@@ -65,7 +67,7 @@ export const UserRegister = () => {
   };
   useEffect(() => {
     if (userCreated || walkerCreated) {
-      window.location.href = "/login";
+      navigate("/login");
     }
   }, [userCreated, walkerCreated]);
 

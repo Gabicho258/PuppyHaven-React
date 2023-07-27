@@ -23,10 +23,12 @@ const App = () => {
         <Route path="/register" element={<UserRegister />} />
         <Route path="/walker-profile" element={<WalkerProfileAccount />} />
         <Route path="/walker-profile/:id" element={<WalkerProfile />} />
+        {/* No se usa */}
         <Route
           path="/give-up-a-pet-for-adoption"
           element={<GiveUpPetAdoption />}
         />
+        {/* ///////// */}
         <Route path="/add-pet" element={<AddPet />} />
         <Route path="/search-walkers" element={<HomePageUser />} />
         <Route path="/user-profile" element={<UserProfile />} />

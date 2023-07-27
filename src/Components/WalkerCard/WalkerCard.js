@@ -19,8 +19,9 @@ export const WalkerCard = ({ userName, userDesc, image, id }) => {
       onClick={() => navigate(`/walker-profile/${id}`)}
     >
       <CardMedia
+        className="walkerCard__image"
         component="img"
-        sx={{ width: 200 }}
+        sx={{ width: 200, height: "12rem" }}
         image={image}
         alt={userName}
       />
