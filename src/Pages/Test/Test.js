@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
-import React from "react";
+import { Box, Button, FormControl, Rating, TextField } from "@mui/material";
+import React, { useState } from "react";
 import {
   createUser,
   deleteUser,
@@ -57,7 +57,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const Test = () => {
   const dispatch = useDispatch();
-  const handleClick = async () => {
+  const handleClick1 = async () => {
     // console.log(await createCalificacion());
     // console.log(await getAllCalificaciones());
     // console.log(
@@ -202,12 +202,130 @@ export const Test = () => {
 
   const mascotas = useSelector((state) => state.mascotas.mascotas);
   console.log(mascotas);
+  const [addingComment, setAddingComment] = useState(false);
+  const handleClick = () => {
+    setAddingComment(true);
+  };
+  const [rate, setRate] = useState(0);
+
+  const user = { role: "user" };
   return (
-    <div>
-      Test
-      <Button variant="contained" onClick={handleClick}>
-        Test
-      </Button>
+    // <div>
+    //   Test
+    //   <Button variant="contained" onClick={handleClick}>
+    //     Test
+    //   </Button>
+    // </div>
+    <div className="comments">
+      <h1>Comentarios</h1>
+      {/* {user?.role === "user" && ( */}
+      {user?.role === "user" && (
+        <>
+          <Button
+            variant="contained"
+            className="addComment"
+            onClick={handleClick}
+          >
+            Añadir nuevo comentario
+          </Button>
+          {addingComment && (
+            <FormControl className="comment-container">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  // handleSubmit(e);
+                }}
+              >
+                <Box
+                  component="div"
+                  sx={{
+                    "& .MuiTextField-root": { m: 1, width: "90%" },
+                  }}
+                  noValidate
+                  autoComplete="off"
+                >
+                  <h3 className="rate">
+                    Puntualos:{" "}
+                    <Rating
+                      name="simple-controlled"
+                      value={rate}
+                      onChange={(event, newValue) => {
+                        setRate(newValue);
+                      }}
+                    />{" "}
+                  </h3>
+                  <TextField
+                    required
+                    multiline
+                    rows={4}
+                    id="outlined-multiline-static"
+                    type="text"
+                    label="Añade el comentario aquí"
+                  />
+                  <Button
+                    type="submit"
+                    color="success"
+                    variant="contained"
+                    className="button-save__comment"
+                  >
+                    Guardar cambios
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="contained"
+                    className="button-cancel__comment"
+                    onClick={() => {
+                      setAddingComment(false);
+                    }}
+                  >
+                    Cancelar
+                  </Button>
+                </Box>
+              </form>
+            </FormControl>
+          )}
+        </>
+      )}
+      {[
+        { author_name: "qwe", rating: 2, comment: "Hola" },
+        { author_name: "qwe", rating: 2, comment: "Hola" },
+        { author_name: "qwe", rating: 2, comment: "Hola" },
+      ].map(({ author_name, rating, comment }, i) => (
+        <Comment key={i} author={author_name} rate={rating} comment={comment} />
+      ))}
     </div>
+  );
+};
+const Comment = ({ author, rate, comment }) => {
+  return (
+    <div className="comment-container">
+      <h3>{author}</h3>
+      <RatingComponent readOnly={true} rate={rate} />
+      <p>{comment}</p>
+    </div>
+  );
+};
+
+export const RatingComponent = ({ readOnly, rate }) => {
+  const [value, setValue] = useState(rate);
+  return (
+    <Box
+      sx={{
+        "& > legend": { mt: 2 },
+      }}
+      style={{ marginBottom: "10px" }}
+    >
+      {!readOnly ? (
+        <Rating
+          name="simple-controlled"
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+        />
+      ) : (
+        <Rating name="read-only" value={value} readOnly />
+      )}
+    </Box>
   );
 };
