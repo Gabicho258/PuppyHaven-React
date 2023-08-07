@@ -13,7 +13,6 @@ import { cloudinaryService } from "../../utils/cloudinaryService";
 import { updateUserAsync } from "../../slices/usuarios.slice";
 
 export const UserProfile = () => {
-  const name = "Gabriel Steven Machicao Quispe";
   const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -94,9 +93,9 @@ export const UserProfile = () => {
           <hr className="left__divider"></hr>
 
           <div className="left__buttons">
-            <Button variant="contained" className="left__buttons-btn">
+            {/* <Button variant="contained" className="left__buttons-btn">
               Editar perfil
-            </Button>
+            </Button> */}
             <Button
               variant="contained"
               className="left__buttons-btn"
@@ -111,8 +110,9 @@ export const UserProfile = () => {
       <div className="section-pets">
         <h3 className="pets-title">Mis mascotas</h3>
         <div className="pets">
-          {mascotas.map((mascota) => (
+          {misMascotas.map((mascota) => (
             <PetCard
+              petCod={mascota.MasCod}
               petName={mascota.MasNom}
               petImageURL={mascota.MasFotURL}
               petBreed={mascota.MasDes}
