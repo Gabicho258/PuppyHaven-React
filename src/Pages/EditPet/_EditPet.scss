@@ -33,10 +33,19 @@
     &-btn {
       display: flex;
       justify-content: center;
+
       &-submit {
-        width: 15rem;
+        width: 10rem;
         height: 3rem;
         margin-top: 1.5rem;
+        margin-right: 1rem;
+      }
+      &-cancel {
+        background-color: #d31b1b;
+        width: 10rem;
+        height: 3rem;
+        margin-top: 1.5rem;
+        margin-left: 1rem;
       }
     }
   }
