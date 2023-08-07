@@ -87,7 +87,7 @@ export const EditPet = () => {
               onClick={showFields}
               variant="contained"
             >
-              Añadir Mascota
+              Editar
             </Button>
           </div>
         </div>

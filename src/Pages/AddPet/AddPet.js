@@ -109,8 +109,8 @@ export const AddPet = () => {
             <Box
               className="addPetContainer__right-box"
               sx={{
-                width: "13rem",
-                height: "13rem",
+                width: "17rem",
+                height: "17rem",
                 backgroundColor: "#dbf0ff",
                 border: "1px dashed grey",
               }}
