@@ -11,6 +11,7 @@ import { UserProfile } from "./Pages/UserProfile/UserProfile";
 import { AddPet } from "./Pages/AddPet/AddPet";
 import { WalkerProfileAccount } from "./Pages/WalkerProfileAccount/WalkerProfileAccount";
 import { EditPet } from "./Pages/EditPet/EditPet";
+import { ConfirmAdoptPet } from "./Pages/ConfirmAdoptPet/ConfirmAdoptPet";
 
 import { Test } from "./Pages/Test/Test";
 
@@ -36,6 +37,7 @@ const App = () => {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/adopt-pet" element={<HomeAdoptPet />} />
         <Route path="/edit-pet" element={<EditPet />} />
+        <Route path="/adopt-pet-confirm" element={<ConfirmAdoptPet />} />
       </Routes>
     </BrowserRouter>
   );
