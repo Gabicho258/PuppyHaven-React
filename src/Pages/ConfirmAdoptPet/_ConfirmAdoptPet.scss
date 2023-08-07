@@ -1,0 +1,62 @@
+.confirmAdoptPetContainer {
+  width: 90vw;
+  margin: 0 auto;
+  &__title {
+    margin: 2rem 0;
+    text-align: center;
+    font-size: 3.5rem;
+  }
+  &__grid {
+    margin-top: 5rem;
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    &-avatar {
+      width: 12rem;
+      height: 12rem;
+    }
+    &-doubleArrow {
+      font-size: 12rem;
+      color: #44d576;
+    }
+    &-info {
+      background-color: #ffa629;
+      border-radius: 7px;
+      width: 60%;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &-item {
+        margin: 0.5rem 0;
+        font-weight: 800;
+        font-size: 1.3rem;
+        text-align: center;
+      }
+    }
+    &-date {
+      &-now {
+        margin-top: 0.5rem;
+        font-size: 1.5rem;
+        background-color: #0d99ff;
+        color: white;
+        font-weight: 900;
+        padding: 1rem;
+      }
+    }
+  }
+  &__btnContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    &-btn {
+      width: 8rem;
+      font-size: 1.3rem;
+    }
+  }
+}
