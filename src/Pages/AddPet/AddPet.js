@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { NavBar } from "../../Components/NavBar/NavBar";
@@ -8,6 +8,21 @@ import Box from "@mui/material/Box";
 import "./_AddPet.scss";
 
 export const AddPet = () => {
+  const [name, setName] = useState("");
+  const [color, setColor] = useState("");
+  const [race, setRace] = useState("");
+  const [age, setAge] = useState(0);
+  const [description, setDescription] = useState("");
+  const [donate, setDonate] = useState(false);
+
+  const showFields = () => {
+    console.log(name);
+    console.log(color);
+    console.log(race);
+    console.log(age);
+    console.log(description);
+    console.log(donate);
+  };
   return (
     <>
       <NavBar />
@@ -18,6 +33,10 @@ export const AddPet = () => {
             <label className="addPetContainer__left-item-label">Nombre:</label>
             <TextField
               className="addPetContainer__left-item-field"
+              value={name}
+              onChange={({ target }) => {
+                setName(target.value);
+              }}
               inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               type="text"
             />
@@ -27,6 +46,11 @@ export const AddPet = () => {
               Color Predominante:
             </label>
             <TextField
+              className="addPetContainer__left-item-field"
+              value={color}
+              onChange={({ target }) => {
+                setColor(target.value);
+              }}
               inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               type="text"
             />
@@ -34,6 +58,11 @@ export const AddPet = () => {
           <div className="addPetContainer__left-item">
             <label className="addPetContainer__left-item-label">Raza:</label>
             <TextField
+              className="addPetContainer__left-item-field"
+              value={race}
+              onChange={({ target }) => {
+                setRace(target.value);
+              }}
               inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               type="text"
             />
@@ -41,6 +70,11 @@ export const AddPet = () => {
           <div className="addPetContainer__left-item">
             <label className="addPetContainer__left-item-label">Edad:</label>
             <TextField
+              className="addPetContainer__left-item-field"
+              value={age}
+              onChange={({ target }) => {
+                setAge(target.value);
+              }}
               inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               type="number"
             />
@@ -50,13 +84,19 @@ export const AddPet = () => {
               Descripcion:
             </label>
             <TextField
+              className="addPetContainer__left-item-field"
+              value={description}
+              onChange={({ target }) => {
+                setDescription(target.value);
+              }}
               inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               type="text"
             />
           </div>
-          <div>
+          <div className="addPetContainer__left-btn">
             <Button
-              className="addPetContainer__left-submitBtn"
+              className="addPetContainer__left-btn-submit"
+              onClick={showFields}
               variant="contained"
             >
               Añadir Mascota
@@ -64,9 +104,10 @@ export const AddPet = () => {
           </div>
         </div>
 
-        <div className="right">
+        <div className="addPetContainer__right">
           <div>
             <Box
+              className="addPetContainer__right-box"
               sx={{
                 width: "13rem",
                 height: "13rem",
@@ -74,12 +115,18 @@ export const AddPet = () => {
                 border: "1px dashed grey",
               }}
             >
-              <Button>Subir una foto</Button>
+              <Button className="addPetContainer__right-box-uploadBtn">
+                Subir una foto
+              </Button>
             </Box>
           </div>
           <div>
             <label>Donar</label>
             <FormControlLabel
+              onClick={({ target }) => {
+                if (donate) setDonate(false);
+                else setDonate(true);
+              }}
               sx={{
                 display: "block",
               }}
