@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -8,6 +8,9 @@ import "./_WalkerProfile.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getWalkerByCodeAsync } from "../../slices/paseadores.slice";
+import { Comment } from "../../Components/Comment/Comment";
+import { Box, FormControl, Rating, TextField } from "@mui/material";
+import { QualificationComponent } from "../../Components/QualificationComponent/QualificationComponent";
 
 export const WalkerProfile = () => {
   const { id } = useParams();
@@ -54,6 +57,48 @@ export const WalkerProfile = () => {
     dispatch(getWalkerByCodeAsync(id));
   }, []);
 
+  const comments = [
+    {
+      authorName: "Pedrito",
+      qualification: { isLiked: true, isDisliked: false },
+      comment: "hola comentario",
+    },
+    {
+      authorName: "Castillo",
+      qualification: { isLiked: true, isDisliked: false },
+      comment: "hola comentario",
+    },
+    {
+      authorName: "Anthony",
+      qualification: { isLiked: true, isDisliked: false },
+      comment: "hola comentario",
+    },
+    {
+      authorName: "Hater",
+      qualification: { isLiked: false, isDisliked: true },
+      comment: "hola comentario malo",
+    },
+  ];
+  const [addingComment, setAddingComment] = useState(false);
+  const handleClick = () => {
+    setAddingComment(true);
+  };
+  const [qualification, setQualification] = useState({
+    isLiked: false,
+    isDisliked: false,
+  });
+  const [comment, setComment] = useState("");
+
+  const user = { role: "user" };
+
+  const showInfo = () => {
+    const info = {
+      comment: comment,
+      qualification: qualification,
+    };
+    console.log(info);
+  };
+
   return (
     <>
       <NavBar />
@@ -88,9 +133,100 @@ export const WalkerProfile = () => {
             <Button variant="contained" className="left__buttons-btn">
               Hacer una cita
             </Button>
-            <Button variant="contained" className="left__buttons-btn">
-              Ver Comentarios
-            </Button>
+          </div>
+          <div className="left__addCommentSection">
+            {user?.role === "user" && (
+              <>
+                <Button
+                  variant="contained"
+                  className="left__addCommentSection-addBtn"
+                  onClick={handleClick}
+                >
+                  Añadir nuevo comentario
+                </Button>
+                {addingComment && (
+                  <FormControl className="left__addCommentSection-form">
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        // handleSubmit(e);
+                      }}
+                    >
+                      <Box
+                        component="div"
+                        sx={{
+                          "& .MuiTextField-root": {},
+                        }}
+                        noValidate
+                        autoComplete="off"
+                        className="left__addCommentSection-form-container"
+                      >
+                        <div className="left__addCommentSection-form-container-qualification">
+                          <h3 className="left__addCommentSection-form-container-qualification-label">
+                            Calificación:
+                          </h3>
+                          <QualificationComponent
+                            value={qualification}
+                            qualification={qualification}
+                            readOnly={false}
+                            onClick={(event, newValue) => {
+                              setQualification(newValue);
+                            }}
+                          ></QualificationComponent>
+                        </div>
+
+                        <TextField
+                          className="left__addCommentSection-form-container-comment"
+                          required
+                          multiline
+                          rows={4}
+                          id="outlined-multiline-static"
+                          type="text"
+                          label="Añade el comentario aquí"
+                          value={comment}
+                          onChange={({ target }) => {
+                            setComment(target.value);
+                          }}
+                        />
+                        <div className="left__addCommentSection-form-container-btnSection">
+                          <Button
+                            type="submit"
+                            color="success"
+                            variant="contained"
+                            className="left__addCommentSection-form-container-btnSection-btn"
+                            onClick={showInfo}
+                          >
+                            Guardar cambios
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="contained"
+                            className="left__addCommentSection-form-container-btnSection-btn"
+                            onClick={() => {
+                              setAddingComment(false);
+                            }}
+                          >
+                            Cancelar
+                          </Button>
+                        </div>
+                      </Box>
+                    </form>
+                  </FormControl>
+                )}
+              </>
+            )}
+          </div>
+          <div className="left__comments">
+            {comments.map(({ authorName, qualification, comment }, i) => {
+              return (
+                <Comment
+                  key={i}
+                  author={authorName}
+                  qualification={qualification}
+                  comment={comment}
+                />
+              );
+            })}
           </div>
         </div>
         <div className="right">

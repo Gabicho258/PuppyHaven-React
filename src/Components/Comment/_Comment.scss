@@ -1,0 +1,22 @@
+.commentContainer {
+  border: 1px solid #e5e5e5;
+  background-color: white;
+  border-radius: 5px;
+  padding: 15px 20px;
+  margin: 10px 5px;
+  width: 90%;
+  &__top {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    &-author {
+      font-size: 1.4rem;
+    }
+  }
+  &__divider {
+    margin: 0.3rem 0;
+  }
+  &__comment {
+    font-size: 1.1rem;
+  }
+}

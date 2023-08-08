@@ -1,0 +1,20 @@
+.qualificationComponent {
+  &__readOnly {
+    display: flex;
+    flex-direction: row;
+    gap: 0.7rem;
+  }
+  &__notReadOnly {
+    display: flex;
+    flex-direction: row;
+    gap: 0.7rem;
+    &-like:hover {
+      scale: 1.2;
+      cursor: pointer;
+    }
+    &-dislike:hover {
+      scale: 1.2;
+      cursor: pointer;
+    }
+  }
+}
