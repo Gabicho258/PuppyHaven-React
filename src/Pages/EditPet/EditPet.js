@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { NavBar } from "../../Components/NavBar/NavBar";
@@ -6,27 +6,91 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Box from "@mui/material/Box";
 import "./_EditPet.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  getMascotasByUserCodeAsync,
+  updateMascotaAsync,
+} from "../../slices/mascotas.slice";
+import { cloudinaryService } from "../../utils/cloudinaryService";
 
 export const EditPet = () => {
-  const petName = "Firulais";
-  const [color, setColor] = useState("");
-  const [race, setRace] = useState("");
-  const [age, setAge] = useState(0);
-  const [description, setDescription] = useState("");
-  const [donate, setDonate] = useState(false);
+  const { id: petID } = useParams();
+  const mascotas = useSelector((state) => state.mascotas.mascotas);
+  const petToEdit = mascotas.filter(
+    (mascota) => mascota.MasCod === parseInt(petID)
+  );
+  const {
+    MasCod: masCod,
+    MasNom: masNom,
+    MasCol: masCol,
+    MasRaz: masRaz,
+    MasEda: masEda,
+    MasFotURL: masFotURL,
+    MasDes: masDes,
+    MasIsToAdo: masIsToAdo,
+    MasUsuCod: masUsuCod,
+  } = petToEdit[0];
+  const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
+  const [color, setColor] = useState(masCol);
+  const [race, setRace] = useState(masRaz);
+  const [age, setAge] = useState(masEda);
+  const [description, setDescription] = useState(masDes);
+  const [donate, setDonate] = useState(masIsToAdo === 0 ? false : true);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [photoURL, setPhotoURL] = useState(masFotURL);
+  // Cloudinary service
+  const [photoUserUrl, setPhotoUserUrl] = useState("");
+  const [photoName, setPhotoName] = useState("Choose file...");
 
-  const showFields = () => {
-    console.log(color);
-    console.log(race);
-    console.log(age);
-    console.log(description);
-    console.log(donate);
+  const showWidgetEditPet = async () => {
+    let state = "";
+    let URL = "";
+    window.cloudinary.openUploadWidget(
+      cloudinaryService("pet_photos"),
+      (err, result) => {
+        if (!err && result && result.event === "success") {
+          state = "success";
+          const { secure_url, original_filename, format } = result.info;
+          URL = secure_url;
+          setPhotoUserUrl(secure_url);
+          setPhotoName(`${original_filename}.${format}`);
+        }
+        console.log(`object ${state}`);
+        if (state === "success" && result.event === "close") {
+          setPhotoURL(URL);
+        }
+      }
+    );
   };
+  ////////
+
+  const handleSubmit = async () => {
+    const mascota = {
+      masCod,
+      masNom,
+      masCol: color,
+      masRaz: race,
+      masEda: age,
+      masFotURL: photoURL,
+      masDes: description,
+      masIsToAdo: donate,
+      masUsuCod,
+    };
+    console.log(mascota);
+    await dispatch(updateMascotaAsync(mascota));
+    navigate("/user-profile");
+  };
+
+  useEffect(() => {
+    dispatch(getMascotasByUserCodeAsync(userSession.id));
+  }, []);
 
   return (
     <>
       <NavBar />
-      <h1 className="editPetName">{petName}</h1>
+      <h1 className="editPetName">{masNom}</h1>
       <div className="editPetContainer">
         <div className="editPetContainer__left">
           <div className="editPetContainer__left-item">
@@ -84,10 +148,17 @@ export const EditPet = () => {
           <div className="editPetContainer__left-btn">
             <Button
               className="editPetContainer__left-btn-submit"
-              onClick={showFields}
+              onClick={handleSubmit}
               variant="contained"
             >
               Editar
+            </Button>
+            <Button
+              className="editPetContainer__left-btn-cancel"
+              onClick={() => navigate("/user-profile")}
+              variant="contained"
+            >
+              Cancelar
             </Button>
           </div>
         </div>
@@ -102,8 +173,17 @@ export const EditPet = () => {
                 border: "1px dashed grey",
               }}
             >
-              <Button className="editPetContainer__right-box-uploadBtn">
-                Subir una foto
+              <Button
+                onClick={showWidgetEditPet}
+                className="editPetContainer__right-box-uploadBtn"
+                style={{
+                  backgroundImage: `url("${photoURL}")`,
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                }}
+              >
+                {photoURL.length > 0 ? "" : "Subir una foto"}
               </Button>
             </Box>
           </div>

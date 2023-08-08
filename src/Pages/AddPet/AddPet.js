@@ -6,6 +6,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Box from "@mui/material/Box";
 import "./_AddPet.scss";
+import { cloudinaryService } from "../../utils/cloudinaryService";
+import { useDispatch, useSelector } from "react-redux";
+import { createMascotaAsync } from "../../slices/mascotas.slice";
+import { useNavigate } from "react-router-dom";
 
 export const AddPet = () => {
   const [name, setName] = useState("");
@@ -14,15 +18,53 @@ export const AddPet = () => {
   const [age, setAge] = useState(0);
   const [description, setDescription] = useState("");
   const [donate, setDonate] = useState(false);
+  const [photoURL, setPhotoURL] = useState("");
+  const user = useSelector((state) => state.usuarios.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const showFields = () => {
-    console.log(name);
-    console.log(color);
-    console.log(race);
-    console.log(age);
-    console.log(description);
-    console.log(donate);
+  // Cloudinary service
+  const [photoUserUrl, setPhotoUserUrl] = useState("");
+  const [photoName, setPhotoName] = useState("Choose file...");
+
+  const showWidgetAddPet = async () => {
+    let state = "";
+    let URL = "";
+    window.cloudinary.openUploadWidget(
+      cloudinaryService("pet_photos"),
+      (err, result) => {
+        if (!err && result && result.event === "success") {
+          state = "success";
+          const { secure_url, original_filename, format } = result.info;
+          URL = secure_url;
+          setPhotoUserUrl(secure_url);
+          setPhotoName(`${original_filename}.${format}`);
+        }
+        console.log(`object ${state}`);
+        if (state === "success" && result.event === "close") {
+          setPhotoURL(URL);
+        }
+      }
+    );
   };
+  ////////
+
+  const handleSubmit = async () => {
+    const mascota = {
+      masNom: name,
+      masCol: color,
+      masRaz: race,
+      masEda: age,
+      masFotURL: photoURL,
+      masDes: description,
+      masIsToAdo: donate,
+      masUsuCod: user[0]?.UsuCod,
+    };
+    await dispatch(createMascotaAsync(mascota));
+    navigate("/user-profile");
+    console.log(user);
+  };
+
   return (
     <>
       <NavBar />
@@ -96,7 +138,7 @@ export const AddPet = () => {
           <div className="addPetContainer__left-btn">
             <Button
               className="addPetContainer__left-btn-submit"
-              onClick={showFields}
+              onClick={handleSubmit}
               variant="contained"
             >
               Añadir Mascota
@@ -115,8 +157,17 @@ export const AddPet = () => {
                 border: "1px dashed grey",
               }}
             >
-              <Button className="addPetContainer__right-box-uploadBtn">
-                Subir una foto
+              <Button
+                onClick={showWidgetAddPet}
+                className="addPetContainer__right-box-uploadBtn"
+                style={{
+                  backgroundImage: `url("${photoURL}")`,
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                }}
+              >
+                {photoURL.length > 0 ? "" : "Subir una foto"}
               </Button>
             </Box>
           </div>
