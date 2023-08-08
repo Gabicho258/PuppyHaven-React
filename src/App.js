@@ -12,6 +12,7 @@ import { AddPet } from "./Pages/AddPet/AddPet";
 import { WalkerProfileAccount } from "./Pages/WalkerProfileAccount/WalkerProfileAccount";
 import { EditPet } from "./Pages/EditPet/EditPet";
 import { ConfirmAdoptPet } from "./Pages/ConfirmAdoptPet/ConfirmAdoptPet";
+import { RequestWalk } from "./Pages/RequestWalk/RequestWalk";
 
 import { Test } from "./Pages/Test/Test";
 
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/adopt-pet" element={<HomeAdoptPet />} />
         <Route path="/edit-pet" element={<EditPet />} />
         <Route path="/adopt-pet-confirm" element={<ConfirmAdoptPet />} />
+        <Route path="/request-walk" element={<RequestWalk />} />
       </Routes>
     </BrowserRouter>
   );
