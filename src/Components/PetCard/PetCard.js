@@ -8,7 +8,7 @@ import "./_PetCard.scss";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export const PetCard = ({ petCod, petName, petImageURL, petBreed }) => {
+export const PetCard = ({ type, petCod, petName, petImageURL, petBreed }) => {
   const navigate = useNavigate();
   return (
     <Card className="petCard">
@@ -18,12 +18,21 @@ export const PetCard = ({ petCod, petName, petImageURL, petBreed }) => {
 
       <Typography className="petCard__breed">{petBreed}</Typography>
       <CardActions className="petCard__actions">
-        <Button
-          className="petCard__actions-btn"
-          onClick={() => navigate(`/edit-pet/${petCod}`)}
-        >
-          Editar
-        </Button>
+        {type === "edit" ? (
+          <Button
+            className="petCard__actions-btn"
+            onClick={() => navigate(`/edit-pet/${petCod}`)}
+          >
+            Editar
+          </Button>
+        ) : (
+          <Button
+            className="petCard__actions-btn"
+            onClick={() => navigate(`/adopt-pet-confirm/${petCod}`)}
+          >
+            Adoptar
+          </Button>
+        )}
       </CardActions>
     </Card>
   );
