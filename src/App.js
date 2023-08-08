@@ -37,8 +37,12 @@ const App = () => {
         <Route path="/search-walkers" element={<HomePageUser />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/adopt-pet" element={<HomeAdoptPet />} />
-        <Route path="/adopt-pet-confirm" element={<ConfirmAdoptPet />} />
+
+
         <Route path="/request-walk" element={<RequestWalk />} />
+
+        <Route path="/adopt-pet-confirm/:id" element={<ConfirmAdoptPet />} />
+
         <Route path="/edit-pet/:id" element={<EditPet />} />
       </Routes>
     </BrowserRouter>

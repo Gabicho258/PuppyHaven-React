@@ -24,8 +24,9 @@ export const HomeAdoptPet = () => {
         </div>
 
         <div className="adoptContainer__cards">
-          {pets.map(({ MasNom, MasFotURL, MasRaz }) => (
+          {pets.map(({ MasCod, MasNom, MasFotURL, MasRaz }) => (
             <PetCard
+              petCod={MasCod}
               petName={MasNom}
               petImageURL={MasFotURL}
               petBreed={MasRaz}

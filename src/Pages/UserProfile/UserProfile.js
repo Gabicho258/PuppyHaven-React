@@ -112,6 +112,7 @@ export const UserProfile = () => {
         <div className="pets">
           {misMascotas.map((mascota) => (
             <PetCard
+              type="edit"
               petCod={mascota.MasCod}
               petName={mascota.MasNom}
               petImageURL={mascota.MasFotURL}
