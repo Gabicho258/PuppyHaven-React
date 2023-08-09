@@ -14,6 +14,7 @@ import { EditPet } from "./Pages/EditPet/EditPet";
 import { ConfirmAdoptPet } from "./Pages/ConfirmAdoptPet/ConfirmAdoptPet";
 import { RequestWalk } from "./Pages/RequestWalk/RequestWalk";
 import { AdoptTramit } from "./Pages/AdoptTramit/AdoptTramit";
+import { MyWalks } from "./Pages/MyWalks/MyWalks";
 
 import { Test } from "./Pages/Test/Test";
 
@@ -45,6 +46,7 @@ const App = () => {
 
         <Route path="/edit-pet/:id" element={<EditPet />} />
         <Route path="/adopt-tramit" element={<AdoptTramit />} />
+        <Route path="/my-walks" element={<MyWalks />} />
       </Routes>
     </BrowserRouter>
   );
