@@ -6,12 +6,13 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import "./_WalkerProfile.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getWalkerByCodeAsync } from "../../slices/paseadores.slice";
 
 export const WalkerProfile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const walker = useSelector((state) => state.paseadores.walker);
   const allDistritos = useSelector((state) => state.distritos.allDistritos);
   const allCalificaciones = useSelector(
@@ -82,10 +83,18 @@ export const WalkerProfile = () => {
             <p className="left__description-des">{walker[0]?.PasDes}</p>
           </div>
           <div className="left__buttons">
-            <Button variant="contained" className="left__buttons-btn">
+            <Button
+              onClick={() => navigate(`/search-walkers`)}
+              variant="contained"
+              className="left__buttons-btn"
+            >
               Retroceder
             </Button>
-            <Button variant="contained" className="left__buttons-btn">
+            <Button
+              onClick={() => navigate(`/request-walk/${id}`)}
+              variant="contained"
+              className="left__buttons-btn"
+            >
               Hacer una cita
             </Button>
             <Button variant="contained" className="left__buttons-btn">

@@ -38,8 +38,7 @@ const App = () => {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/adopt-pet" element={<HomeAdoptPet />} />
 
-
-        <Route path="/request-walk" element={<RequestWalk />} />
+        <Route path="/request-walk/:id" element={<RequestWalk />} />
 
         <Route path="/adopt-pet-confirm/:id" element={<ConfirmAdoptPet />} />
 
