@@ -5,6 +5,7 @@ import * as paseosFunctions from "./paseos.api.js";
 import * as tramitesFunctions from "./tramites.api.js";
 import * as usuariosFunctions from "./usuarios.api.js";
 import * as paseadoresFunctions from "./paseadores.api.js";
+import * as comentariosFunctions from "./comentarios.api.js";
 
 export {
   calificacionesFunctions,
@@ -14,4 +15,5 @@ export {
   tramitesFunctions,
   usuariosFunctions,
   paseadoresFunctions,
+  comentariosFunctions,
 };

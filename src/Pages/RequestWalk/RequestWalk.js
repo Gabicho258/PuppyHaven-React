@@ -11,42 +11,75 @@ import Checkbox from "@mui/material/Checkbox";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import "./_RequestWalk.scss";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getWalkerByCodeAsync } from "../../slices/paseadores.slice";
+import { useNavigate, useParams } from "react-router-dom";
+import { getMascotasByUserCodeAsync } from "../../slices/mascotas.slice";
+import { createPaseoAsync } from "../../slices/paseos.slice";
 
 export const RequestWalk = () => {
-  const info = {
-    walkerName: "Carlo Diaz",
-    walkerDistrict: "Jose Luis Bustamante y Rivero",
-    walkerEmail: "correo@correo.com",
-    walkerAge: 18,
-    walkerLikes: 23,
-    walkerDislikes: 2,
-    userPets: ["Camilo", "Camila", "Alaska", "Alex", "Alura"],
-  };
+  const { id } = useParams();
+  const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
   const [district, setDistrict] = useState("");
   const [reference, setReference] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [walkHours, setWalkHours] = useState(1);
   const [selectedPets, setSelectedPets] = useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const walker = useSelector((state) => state.paseadores.walker);
+  const allDistritos = useSelector((state) => state.distritos.allDistritos);
+  const mascotas = useSelector((state) => state.mascotas.mascotas);
+  const misMascotas = mascotas.filter((mascota) => mascota.MasIsToAdo === 0);
 
-  const showInfo = () => {
-    const dateNow = date.split("-");
-    const form = {
-      distric: district,
-      reference: reference,
-      date: {
-        day: dateNow[2],
-        month: dateNow[1],
-        year: dateNow[0],
-      },
-      time: time,
-      walkHours: walkHours,
-      selectedPets: selectedPets,
-    };
-    console.log(form);
+  const allCalificaciones = useSelector(
+    (state) => state.calificaciones.allCalificaciones
+  );
+  const distrito = allDistritos.filter(
+    (distrito) => walker[0]?.DisCod === distrito.DisCod
+  );
+  const calificacion = allCalificaciones.filter(
+    (calificacion) => walker[0]?.CalCod === calificacion.CalCod
+  );
+  const likes = calificacion[0]?.CalMeGus;
+  const dislikes = calificacion[0]?.CalNoGus;
+  const info = {
+    walkerName: walker[0]?.PasNom,
+    walkerDistrict: distrito[0]?.DisNom,
+    walkerEmail: walker[0]?.PasCor,
+    walkerAge: new Date().getFullYear() - walker[0]?.PasFecNacAno,
+    walkerLikes: likes,
+    walkerDislikes: dislikes,
+    userPets: misMascotas,
   };
+  const handleRequestWalk = async () => {
+    const dateNow = date.split("-");
+    const paseo = {
+      pasCod: id,
+      usuCod: userSession.id,
+      pasDis: district,
+      pasDir: reference,
+      pasFecAno: dateNow[0],
+      pasFecMes: dateNow[1],
+      pasFecDia: dateNow[2],
+      pasHor: time,
+      pasCanHor: walkHours,
+      pasEst: "P",
+      mascotas: selectedPets.map((pet) => pet.MasCod),
+    };
+    console.log(paseo);
+    await dispatch(createPaseoAsync(paseo));
+    // MANEJAR LA CREACIÓN DE UN PASEO REDIRIGIENDO A LOS PASEOS
+  };
+  useEffect(() => {
+    dispatch(getMascotasByUserCodeAsync(userSession.id));
+
+    dispatch(getWalkerByCodeAsync(id));
+  }, []);
   return (
     <>
       <NavBar />
@@ -55,6 +88,7 @@ export const RequestWalk = () => {
           <div className="requestWalkGrid__left-walkerInfo">
             <Avatar
               sx={{ bgcolor: "#202124" }}
+              src={walker[0]?.PasFotURL}
               variant="rounded"
               className="requestWalkGrid__left-walkerInfo-avatar"
             >
@@ -176,22 +210,28 @@ export const RequestWalk = () => {
               Seleccionar mascota:
             </label>
             <FormGroup className="requestWalkGrid__right-selectPet-form">
-              {info.userPets.map((item) => {
+              {info.userPets.map((mascota) => {
                 return (
                   <FormControlLabel
                     control={
                       <Checkbox
                         onClick={({ target }) => {
-                          if (selectedPets.some((pet) => pet === item)) {
+                          if (
+                            selectedPets.some(
+                              (pet) => pet.MasNom === mascota.MasNom
+                            )
+                          ) {
                             setSelectedPets(
-                              selectedPets.filter((pet) => pet !== item)
+                              selectedPets.filter(
+                                (pet) => pet.MasNom !== mascota.MasNom
+                              )
                             );
                           }
-                          selectedPets.push(item);
+                          selectedPets.push(mascota);
                         }}
                       />
                     }
-                    label={item}
+                    label={mascota.MasNom}
                   />
                 );
               })}
@@ -201,11 +241,12 @@ export const RequestWalk = () => {
             <Button
               variant="contained"
               className="left__buttons-btnrequestWalkGrid__right-btnSection-btn"
-              onClick={showInfo}
+              onClick={handleRequestWalk}
             >
               Solicitar una cita
             </Button>
             <Button
+              onClick={() => navigate(`/walker-profile/${id}`)}
               variant="contained"
               className="left__buttons-btnrequestWalkGrid__right-btnSection-btn"
             >
