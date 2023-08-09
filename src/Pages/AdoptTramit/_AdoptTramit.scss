@@ -1,0 +1,89 @@
+.adoptTramitList {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 5rem;
+  &__item {
+    width: 70%;
+    border-radius: 20px;
+    background-color: #bde3ff;
+    margin: 3rem 0;
+    &-status {
+      display: flex;
+      justify-content: center;
+      &-content {
+        background-color: #ffcd29;
+        width: 20%;
+        text-align: center;
+        font-weight: 900;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+      }
+    }
+    &-grid {
+      margin: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 0.4fr 1fr 0.4fr 1fr;
+      place-content: center;
+      place-items: center;
+      &-doubleArrow {
+        font-size: 6rem;
+        color: #44d576;
+      }
+      &-gridItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        &-avatar {
+          width: 6rem;
+          height: 6rem;
+          margin-bottom: 1rem;
+        }
+        &-name {
+          padding: 0.3rem;
+          background-color: #0d99ff;
+          font-weight: 900;
+          color: white;
+          text-align: center;
+          width: 50%;
+        }
+        &-info {
+          color: white;
+          width: 80%;
+          &-name {
+            background-color: #0d99ff;
+            padding: 0.3rem;
+            text-align: center;
+            font-weight: 900;
+          }
+          &-description {
+            background-color: #065188;
+            padding: 0.3rem 1.5rem;
+          }
+        }
+      }
+    }
+    &-code {
+      text-align: center;
+      font-weight: 800;
+      width: 25%;
+      padding: 0.5rem;
+      background-color: #ffa629;
+      border-top-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+    &-date {
+      text-align: center;
+      font-weight: 800;
+      width: 10%;
+      padding: 0.5rem;
+      background-color: #ffa629;
+      margin-left: 90%;
+      border-bottom-right-radius: 20px;
+      border-top-left-radius: 20px;
+    }
+  }
+}
