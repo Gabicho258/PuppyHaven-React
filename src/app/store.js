@@ -6,6 +6,7 @@ import calificacionesReducer from "../slices/calificaciones.slice";
 import paseadoresReducer from "../slices/paseadores.slice";
 import tramitesReducer from "../slices/tramites.slice";
 import distritosReducer from "../slices/distritos.slice";
+import comentariosReducer from "../slices/comentarios.slice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     paseadores: paseadoresReducer,
     tramites: tramitesReducer,
     distritos: distritosReducer,
+    comentarios: comentariosReducer,
   },
 });
