@@ -53,7 +53,7 @@ export const ConfirmAdoptPet = () => {
       traMasCod: masCod,
     };
     await dispatch(createTramiteAsync(tramite));
-    navigate("/adopt-pet");
+    navigate("/adopt-tramit");
   };
   useEffect(() => {
     dispatch(getAllMascotasAsync());
