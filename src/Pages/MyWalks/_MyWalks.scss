@@ -1,0 +1,66 @@
+.myWalksContainer {
+  width: 70%;
+  margin: 4rem auto;
+  &__title {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.7rem;
+  }
+  &__btn {
+    margin: 3rem 0;
+    background-color: #c88220;
+    color: black;
+    font-weight: 800;
+    width: 20%;
+  }
+  &__tableContainer {
+    border-radius: 15px;
+    &-table {
+      &-body {
+        &-cell {
+          border-color: #999;
+          font-size: 1.1rem;
+          background-color: #303030;
+          color: white;
+          &-petList {
+            margin-left: 0.7rem;
+          }
+
+          &-p {
+            background-color: #d5ed73;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+          }
+          &-r {
+            background-color: #ed5959;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+          }
+          &-c {
+            background-color: #59d2ed;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+          }
+          &-o {
+            background-color: #49f349;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+          }
+        }
+      }
+      &-head {
+        &-cell {
+          font-size: 1.3rem;
+          font-weight: 900;
+          color: white;
+          border-color: #999;
+          background-color: black;
+        }
+      }
+    }
+  }
+}
