@@ -15,6 +15,7 @@ import { ConfirmAdoptPet } from "./Pages/ConfirmAdoptPet/ConfirmAdoptPet";
 import { RequestWalk } from "./Pages/RequestWalk/RequestWalk";
 import { AdoptTramit } from "./Pages/AdoptTramit/AdoptTramit";
 import { MyWalks } from "./Pages/MyWalks/MyWalks";
+import { MyRequests } from "./Pages/MyRequests/MyRequests";
 
 import { Test } from "./Pages/Test/Test";
 
@@ -42,12 +43,12 @@ const App = () => {
 
         <Route path="/request-walk/:id" element={<RequestWalk />} />
 
-
         <Route path="/adopt-pet-confirm/:id" element={<ConfirmAdoptPet />} />
 
         <Route path="/edit-pet/:id" element={<EditPet />} />
         <Route path="/adopt-tramit" element={<AdoptTramit />} />
         <Route path="/my-walks" element={<MyWalks />} />
+        <Route path="/my-requests" element={<MyRequests />} />
       </Routes>
     </BrowserRouter>
   );

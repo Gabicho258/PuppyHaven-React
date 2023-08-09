@@ -1,5 +1,5 @@
-.myWalksContainer {
-  width: 70%;
+.myRequestsContainer {
+  width: 80%;
   margin: 4rem auto;
   &__title {
     text-align: center;
@@ -25,30 +25,26 @@
           &-petList {
             margin-left: 0.7rem;
           }
-
-          &-p {
-            background-color: #d5ed73;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-align: center;
-          }
-          &-r {
-            background-color: #ed5959;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-align: center;
-          }
-          &-c {
-            background-color: #59d2ed;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-align: center;
-          }
-          &-o {
-            background-color: #49f349;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-align: center;
+          &-btn {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+            gap: 0.5rem;
+            &-accept {
+              background-color: #00c500;
+              font-weight: 800;
+              &-icon {
+                margin-right: 0.5rem;
+              }
+            }
+            &-cancel {
+              background-color: #f83737;
+              font-weight: 800;
+              &-icon {
+                margin-right: 0.5rem;
+              }
+            }
           }
         }
       }
