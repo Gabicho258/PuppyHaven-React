@@ -11,9 +11,15 @@ import { getWalkerByCodeAsync } from "../../slices/paseadores.slice";
 import { Comment } from "../../Components/Comment/Comment";
 import { Box, FormControl, Rating, TextField } from "@mui/material";
 import { QualificationComponent } from "../../Components/QualificationComponent/QualificationComponent";
+import {
+  createComentarioAsync,
+  getComentariosByWalkerCodeAsync,
+} from "../../slices/comentarios.slice";
+import { getAllCalificacionesAsync } from "../../slices/calificaciones.slice";
 
 export const WalkerProfile = () => {
   const { id } = useParams();
+  const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const walker = useSelector((state) => state.paseadores.walker);
@@ -21,6 +27,7 @@ export const WalkerProfile = () => {
   const allCalificaciones = useSelector(
     (state) => state.calificaciones.allCalificaciones
   );
+  const comentarios = useSelector((state) => state.comentarios.comentarios);
   const distrito = allDistritos.filter(
     (distrito) => walker[0]?.DisCod === distrito.DisCod
   );
@@ -56,30 +63,9 @@ export const WalkerProfile = () => {
   ];
   useEffect(() => {
     dispatch(getWalkerByCodeAsync(id));
+    dispatch(getComentariosByWalkerCodeAsync(id));
   }, []);
 
-  const comments = [
-    {
-      authorName: "Pedrito",
-      qualification: { isLiked: true, isDisliked: false },
-      comment: "hola comentario",
-    },
-    {
-      authorName: "Castillo",
-      qualification: { isLiked: true, isDisliked: false },
-      comment: "hola comentario",
-    },
-    {
-      authorName: "Anthony",
-      qualification: { isLiked: true, isDisliked: false },
-      comment: "hola comentario",
-    },
-    {
-      authorName: "Hater",
-      qualification: { isLiked: false, isDisliked: true },
-      comment: "hola comentario malo",
-    },
-  ];
   const [addingComment, setAddingComment] = useState(false);
   const handleClick = () => {
     setAddingComment(true);
@@ -92,12 +78,22 @@ export const WalkerProfile = () => {
 
   const user = { role: "user" };
 
-  const showInfo = () => {
-    const info = {
-      comment: comment,
-      qualification: qualification,
+  const handleSubmit = async () => {
+    const comentario = {
+      usuCod: userSession.id,
+      pasCod: parseInt(id),
+      comIsLike: qualification.isLiked,
+      comTex: comment,
     };
-    console.log(info);
+    await dispatch(createComentarioAsync(comentario));
+    setAddingComment(false);
+    setQualification({
+      isLiked: false,
+      isDisliked: false,
+    });
+    setComment("");
+    await dispatch(getComentariosByWalkerCodeAsync(id));
+    await dispatch(getAllCalificacionesAsync());
   };
 
   return (
@@ -195,6 +191,8 @@ export const WalkerProfile = () => {
                           value={comment}
                           onChange={({ target }) => {
                             setComment(target.value);
+                            console.log(qualification.isDisliked);
+                            console.log(qualification.isLiked);
                           }}
                         />
                         <div className="left__addCommentSection-form-container-btnSection">
@@ -203,7 +201,8 @@ export const WalkerProfile = () => {
                             color="success"
                             variant="contained"
                             className="left__addCommentSection-form-container-btnSection-btn"
-                            onClick={showInfo}
+                            onClick={handleSubmit}
+                            disabled={comment.length === 0}
                           >
                             Guardar cambios
                           </Button>
@@ -213,6 +212,11 @@ export const WalkerProfile = () => {
                             className="left__addCommentSection-form-container-btnSection-btn"
                             onClick={() => {
                               setAddingComment(false);
+                              setComment("");
+                              setQualification({
+                                isLiked: false,
+                                isDisliked: false,
+                              });
                             }}
                           >
                             Cancelar
@@ -226,16 +230,25 @@ export const WalkerProfile = () => {
             )}
           </div>
           <div className="left__comments">
-            {comments.map(({ authorName, qualification, comment }, i) => {
-              return (
-                <Comment
-                  key={i}
-                  author={authorName}
-                  qualification={qualification}
-                  comment={comment}
-                />
-              );
-            })}
+            {comentarios.length === 0 ? (
+              <div className="left__comments-empty">
+                <p>No hay comentarios</p>
+              </div>
+            ) : (
+              comentarios.map(({ UsuNom, ComIsLike, ComTex }, i) => {
+                return (
+                  <Comment
+                    key={i}
+                    author={UsuNom}
+                    qualification={{
+                      isLiked: ComIsLike,
+                      isDisliked: !ComIsLike,
+                    }}
+                    comment={ComTex}
+                  />
+                );
+              })
+            )}
           </div>
         </div>
         <div className="right">
