@@ -54,6 +54,12 @@ export const NavBar = () => {
                 <Link to="/search-walkers">BUSCAR PASEO</Link>
               </li>
               <li className="nav__ul-li">
+                <Link to="/adopt-tramit">TRAMITES</Link>
+              </li>
+              <li className="nav__ul-li">
+                <Link to="/my-walks">MIS PASEOS</Link>
+              </li>
+              <li className="nav__ul-li">
                 <span className="nav__ul-li-name">{user[0]?.UsuNom}</span>
                 <Avatar
                   className="nav__ul-li-avatar"
@@ -71,7 +77,10 @@ export const NavBar = () => {
             <>
               {" "}
               <li className="nav__ul-li">
-                <Link to="/adopt-pet">SOLICITUDES DE PASEOS</Link>
+                <Link to="/my-requests">SOLICITUDES DE PASEOS</Link>
+              </li>
+              <li className="nav__ul-li">
+                <Link to="/my-walks">CITAS</Link>
               </li>
               <li className="nav__ul-li">
                 <span className="nav__ul-li-name">{walker[0]?.PasNom}</span>
