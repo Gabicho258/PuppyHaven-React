@@ -11,8 +11,10 @@ import FormControl from "@mui/material/FormControl";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUserAsync } from "../../slices/usuarios.slice";
 import { loginWalkerAsync } from "../../slices/paseadores.slice";
+import { LoginNotificationError } from "../../Components/LoginNotificationError/LoginNotificationError";
 
 export const UserLogin = () => {
+  const [alert, setAlert] = useState(true);
   const [rol, setRol] = useState("usuario");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
@@ -50,6 +52,19 @@ export const UserLogin = () => {
   }, [userIsLoggued, walkerIsLoggued]);
   return (
     <>
+      {alert ? (
+        <LoginNotificationError
+          alertOnUser={() => {
+            return true;
+          }}
+          alertOnWalker={() => {
+            return true;
+          }}
+          message={"No se pudo iniciar sesión correctamente"}
+        />
+      ) : (
+        <></>
+      )}
       <div className="container">
         <form className="loginForm">
           <PersonIcon className="loginForm__icon"></PersonIcon>
