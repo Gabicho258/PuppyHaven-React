@@ -15,7 +15,7 @@ import {
   updateWalkerAsync,
 } from "../../slices/paseadores.slice";
 import { cloudinaryService } from "../../utils/cloudinaryService";
-
+import { getComentariosByWalkerCodeAsync } from "../../slices/comentarios.slice";
 
 export const WalkerProfileAccount = () => {
   const walkerSession = JSON.parse(sessionStorage.getItem("infoUser"));
@@ -26,6 +26,7 @@ export const WalkerProfileAccount = () => {
   const allCalificaciones = useSelector(
     (state) => state.calificaciones.allCalificaciones
   );
+  const comentarios = useSelector((state) => state.comentarios.comentarios);
   const distrito = allDistritos.filter(
     (distrito) => walker[0]?.DisCod === distrito.DisCod
   );
@@ -96,17 +97,19 @@ export const WalkerProfileAccount = () => {
     setIsEditing(true);
   };
 
-  const comentarios = [
-    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
-    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
-    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
-    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
-    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
-    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
-    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
-  ];
+  // const comentarios = [
+  //   { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+  //   { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+  //   { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+  //   { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+  //   { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+  //   { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+  //   { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+  // ];
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(getComentariosByWalkerCodeAsync(walkerSession.id));
+  }, []);
 
   return (
     <>
