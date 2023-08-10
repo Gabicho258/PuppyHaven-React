@@ -16,10 +16,12 @@ import { createUserAsync } from "../../slices/usuarios.slice";
 import { createWalkerAsync } from "../../slices/paseadores.slice";
 import { calificacionesFunctions } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { distritos } from "../../utils/distritos";
 // import { login } from "../../api/user.api";
 const { createCalificacion } = calificacionesFunctions;
 export const UserRegister = () => {
   const [rol, setRol] = useState("usuario");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userCreated = useSelector((state) => state.usuarios.created);
@@ -27,31 +29,27 @@ export const UserRegister = () => {
   const handleRegister = async ({ target }) => {
     console.log(rol);
     const userToRegister = {
-      usuNom: target[2].value,
+      usuNom: `${target[2].value} ${target[4].value}`,
       usuCor: target[6].value,
       usuCon: target[14].value,
       disCod: 1,
       usuFotURL:
-        "https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png",
+        "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
       usuFecNacAno: parseInt(target[10].value.split("-")[0]),
       usuFecNacMes: parseInt(target[10].value.split("-")[1]),
       usuFecNacDia: parseInt(target[10].value.split("-")[2]),
     };
     const walkerToRegister = {
-      pasNom: target[2].value,
+      pasNom: `${target[2].value} ${target[4].value}`,
       pasCor: target[6].value,
       pasCon: target[14].value,
       disCod: 3,
       pasFotURL:
-        "https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png",
+        "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
       pasFecNacAno: parseInt(target[10].value.split("-")[0]),
       pasFecNacMes: parseInt(target[10].value.split("-")[1]),
       pasFecNacDia: parseInt(target[10].value.split("-")[2]),
-      pasDes: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-        cursus, odio ac hendrerit rutrum, velit nisi finibus justo, sit
-        amet sollicitudin nisl est at urna. Mauris dapibus justo a
-        consequat feugiat. Nulla a magna luctus, lacinia leo id, hendrerit
-        nulla. Sed eu ultrices ligula. `,
+      pasDes: `¡Hola! Mi nombre es ${target[2].value}`,
       pasDis: "",
     };
     if (rol === "usuario") {

@@ -6,15 +6,22 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import "./_WalkerProfileAccount.scss";
 import { useDispatch, useSelector } from "react-redux";
+import { TextField } from "@mui/material";
+import {
+  getWalkerByCodeAsync,
+  updateWalkerAsync,
+} from "../../slices/paseadores.slice";
+import { cloudinaryService } from "../../utils/cloudinaryService";
 
 export const WalkerProfileAccount = () => {
   const walkerSession = JSON.parse(sessionStorage.getItem("infoUser"));
   const walker = useSelector((state) => state.paseadores.walker);
+  const dispatch = useDispatch();
   const allDistritos = useSelector((state) => state.distritos.allDistritos);
+  const [description, setDescription] = useState(walker[0]?.PasDes);
   const allCalificaciones = useSelector(
     (state) => state.calificaciones.allCalificaciones
   );
-
   const distrito = allDistritos.filter(
     (distrito) => walker[0]?.DisCod === distrito.DisCod
   );
@@ -30,34 +37,62 @@ export const WalkerProfileAccount = () => {
     distrito[0]?.DisNom,
     walker[0]?.PasCor,
   ];
-
-  const walkerAvailability = {
-    lunes: "15:00 - 18:00",
-    martes: "15:00 - 18:00",
-    miercoles: "14:00 - 17:00",
-    jueves: "15:00 - 18:00",
-    viernes: "15:00 - 18:00",
-    sabado: "12:00 - 1:30",
-    domingo: "15:00 - 18:00",
+  const handleSubmit = async () => {
+    const paseadorToEdit = {
+      pasCod: walker[0].PasCod,
+      disCod: walker[0].DisCod,
+      pasFotURL: walker[0].PasFotURL,
+      pasDes: description,
+      pasDis: "",
+    };
+    await dispatch(updateWalkerAsync(paseadorToEdit));
+    await dispatch(getWalkerByCodeAsync(walker[0]?.PasCod));
+    setIsEditing(false);
   };
-  // const walkerAvailability = undefined;
-  const days = [
-    "lunes",
-    "martes",
-    "miercoles",
-    "jueves",
-    "viernes",
-    "sabado",
-    "domingo",
-  ];
-  useEffect(() => {
-    // handleInit();
-    console.log(walkerInfo);
-  }, []);
+  // Cloudinary service
+  const [photoUserUrl, setPhotoUserUrl] = useState("");
+  const [photoName, setPhotoName] = useState("Choose file...");
+
+  const showWidgetPhotoUser = async () => {
+    let state = "";
+    let URL = "";
+    window.cloudinary.openUploadWidget(
+      cloudinaryService("user_photos"),
+      (err, result) => {
+        if (!err && result && result.event === "success") {
+          state = "success";
+          const { secure_url, original_filename, format } = result.info;
+          URL = secure_url;
+          setPhotoUserUrl(secure_url);
+          setPhotoName(`${original_filename}.${format}`);
+        }
+        console.log(`object ${state}`);
+        if (state === "success" && result.event === "close") {
+          handlePhotoEdit(URL);
+        }
+      }
+    );
+  };
+  //////////////
+  const handlePhotoEdit = async (pasFotURL) => {
+    // await showWidgetPhotoUser();
+    const paseadorToEdit = {
+      pasCod: walker[0].PasCod,
+      disCod: walker[0].DisCod,
+      pasFotURL: pasFotURL,
+      pasDes: description,
+      pasDis: "",
+    };
+    await dispatch(updateWalkerAsync(paseadorToEdit));
+    await dispatch(getWalkerByCodeAsync(walker[0]?.PasCod));
+  };
   const [isEditing, setIsEditing] = useState(false);
   const handleClick = () => {
+    setDescription(walker[0]?.PasDes);
     setIsEditing(true);
   };
+  useEffect(() => {}, []);
+
   return (
     <>
       <NavBar />
@@ -70,6 +105,7 @@ export const WalkerProfileAccount = () => {
               src={walker[0]?.PasFotURL}
               variant="rounded"
               sx={{ width: 200, height: 200 }}
+              onClick={showWidgetPhotoUser}
             />
             <div className="left__user-info">
               <h3 className="left__user-info-name">{walker[0]?.PasNom}</h3>
@@ -86,13 +122,24 @@ export const WalkerProfileAccount = () => {
             {isEditing ? (
               <>
                 <div className="left__description-edit">
-                  <textarea className="left__description-edit-textarea"></textarea>
+                  <TextField
+                    id="filled-multiline-flexible"
+                    label="Descripción"
+                    multiline
+                    maxRows={6}
+                    variant="filled"
+                    className="left__description-edit-textarea"
+                    value={description}
+                    onChange={({ target }) => setDescription(target.value)}
+                  />
+                  {/* <textarea className="left__description-edit-textarea"></textarea> */}
                   <div className="left__description-edit-btnSection">
                     <Button
                       type="submit"
                       color="success"
                       variant="contained"
                       className="left__description-edit-btnSection-btn"
+                      onClick={handleSubmit}
                     >
                       Guardar cambios
                     </Button>
