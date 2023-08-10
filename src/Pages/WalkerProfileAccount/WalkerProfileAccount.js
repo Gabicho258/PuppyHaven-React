@@ -6,12 +6,16 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import "./_WalkerProfileAccount.scss";
 import { useDispatch, useSelector } from "react-redux";
+
+import { Comment } from "../../Components/Comment/Comment";
+
 import { TextField } from "@mui/material";
 import {
   getWalkerByCodeAsync,
   updateWalkerAsync,
 } from "../../slices/paseadores.slice";
 import { cloudinaryService } from "../../utils/cloudinaryService";
+
 
 export const WalkerProfileAccount = () => {
   const walkerSession = JSON.parse(sessionStorage.getItem("infoUser"));
@@ -91,6 +95,17 @@ export const WalkerProfileAccount = () => {
     setDescription(walker[0]?.PasDes);
     setIsEditing(true);
   };
+
+  const comentarios = [
+    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+    { UsuNom: "Pepe", ComIsLike: true, ComTex: "este es un buen comment" },
+  ];
+
   useEffect(() => {}, []);
 
   return (
@@ -175,6 +190,27 @@ export const WalkerProfileAccount = () => {
               >
                 <strong>Editar Datos</strong>
               </Button>
+            )}
+          </div>
+          <div className="left__comments">
+            {comentarios.length === 0 ? (
+              <div className="left__comments-empty">
+                <p>No hay comentarios</p>
+              </div>
+            ) : (
+              comentarios.map(({ UsuNom, ComIsLike, ComTex }, i) => {
+                return (
+                  <Comment
+                    key={i}
+                    author={UsuNom}
+                    qualification={{
+                      isLiked: ComIsLike,
+                      isDisliked: !ComIsLike,
+                    }}
+                    comment={ComTex}
+                  />
+                );
+              })
             )}
           </div>
         </div>
