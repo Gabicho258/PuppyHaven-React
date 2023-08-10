@@ -73,7 +73,7 @@ export const RequestWalk = () => {
     };
     console.log(paseo);
     await dispatch(createPaseoAsync(paseo));
-    // MANEJAR LA CREACIÓN DE UN PASEO REDIRIGIENDO A LOS PASEOS
+    navigate("/my-walks");
   };
   useEffect(() => {
     dispatch(getMascotasByUserCodeAsync(userSession.id));

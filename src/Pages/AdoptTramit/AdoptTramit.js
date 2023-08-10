@@ -1,63 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import Avatar from "@mui/material/Avatar";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import "./_AdoptTramit.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { getTramitesByUserAdopterCodeAsync } from "../../slices/tramites.slice";
 
 export const AdoptTramit = () => {
-  const today = new Date(Date.now());
-  const tramits = [
-    {
-      TraCod: 1234,
-      TraUsuNomAdo: "Carlos",
-      TraUsuNomDue: "Gabriel",
-      MasNom: "Firulais",
-      MasRaz: "Golden",
-      MasCol: "Amarillo",
-      MasEda: 3,
-      TraEst: "Pendiente",
-      TraFecAno: today.getFullYear(),
-      TraFecMes: today.getMonth() + 1,
-      TraFecDia: today.getDay(),
-    },
-    {
-      TraCod: 1234,
-      TraUsuNomAdo: "Carlos",
-      TraUsuNomDue: "Gabriel",
-      MasNom: "Firulais",
-      MasRaz: "Golden",
-      MasCol: "Amarillo",
-      MasEda: 3,
-      TraEst: "Pendiente",
-      TraFecAno: today.getFullYear(),
-      TraFecMes: today.getMonth() + 1,
-      TraFecDia: today.getDay(),
-    },
-    {
-      TraCod: 1234,
-      TraUsuNomAdo: "Carlos",
-      TraUsuNomDue: "Gabriel",
-      MasNom: "Firulais",
-      MasRaz: "Golden",
-      MasCol: "Amarillo",
-      MasEda: 3,
-      TraEst: "Pendiente",
-      TraFecAno: today.getFullYear(),
-      TraFecMes: today.getMonth() + 1,
-      TraFecDia: today.getDay(),
-    },
-  ];
+  const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
+  const dispatch = useDispatch();
+  const tramites = useSelector((state) => state.tramites.tramites);
+  console.log(tramites);
+
+  useEffect(() => {
+    dispatch(getTramitesByUserAdopterCodeAsync(userSession.id));
+  }, []);
+
   return (
     <>
       <NavBar />
       <div className="adoptTramitList">
-        {tramits ? (
+        {tramites.length !== 0 ? (
           <>
-            {tramits.map((tramit) => {
+            {tramites.map((tramite) => {
               return (
                 <div className="adoptTramitList__item">
                   <div className="adoptTramitList__item-code">
-                    Código de trámite: {tramit.TraCod}
+                    Código de trámite: {tramite.TraCod}
                   </div>
                   <div className="adoptTramitList__item-grid">
                     <div className="adoptTramitList__item-grid-gridItem">
@@ -65,12 +34,13 @@ export const AdoptTramit = () => {
                         sx={{ bgcolor: "#202124" }}
                         variant="rounded"
                         className="adoptTramitList__item-grid-gridItem-avatar"
-                        alt={tramit.TraUsuNomDue}
-                      >
-                        {tramit.TraUsuNomDue}
-                      </Avatar>
+                        alt={tramite.owner.UsuNom}
+                        src={tramite.owner.UsuFotURL}
+                      />
+                      {/* {tramite.owner.UsuNom} */}
+                      {/* </Avatar> */}
                       <div className="adoptTramitList__item-grid-gridItem-name">
-                        {tramit.TraUsuNomDue}
+                        {tramite.owner.UsuNom}
                       </div>
                     </div>
                     <DoubleArrowIcon className="adoptTramitList__item-grid-doubleArrow" />
@@ -79,24 +49,25 @@ export const AdoptTramit = () => {
                         sx={{ bgcolor: "#202124" }}
                         variant="rounded"
                         className="adoptTramitList__item-grid-gridItem-avatar"
-                        alt={tramit.MasNom}
+                        alt={tramite.mascota.MasNom}
+                        src={tramite.mascota.MasFotURL}
                       >
-                        {tramit.MasNom}
+                        {tramite.mascota.MasNom}
                       </Avatar>
                       <div className="adoptTramitList__item-grid-gridItem-info">
                         <div className="adoptTramitList__item-grid-gridItem-info-name">
-                          {tramit.MasNom}
+                          {tramite.mascota.MasNom}
                         </div>
                         <div className="adoptTramitList__item-grid-gridItem-info-description">
                           <ul className="adoptTramitList__item-grid-gridItem-info-description-list">
                             <li className="adoptTramitList__item-grid-gridItem-info-description-list-item">
-                              Color: {tramit.MasCol}
+                              Color: {tramite.mascota.MasCol}
                             </li>
                             <li className="adoptTramitList__item-grid-gridItem-info-description-list-item">
-                              Raza: {tramit.MasRaz}
+                              Raza: {tramite.mascota.MasRaz}
                             </li>
                             <li className="adoptTramitList__item-grid-gridItem-info-description-list-item">
-                              Edad: {tramit.MasEda}
+                              Edad: {tramite.mascota.MasEda} años
                             </li>
                           </ul>
                         </div>
@@ -108,22 +79,24 @@ export const AdoptTramit = () => {
                         sx={{ bgcolor: "#202124" }}
                         variant="rounded"
                         className="adoptTramitList__item-grid-gridItem-avatar"
-                        alt={tramit.TraUsuNomAdo}
-                      >
-                        {tramit.TraUsuNomAdo}
-                      </Avatar>
+                        alt={tramite.adoptador.UsuNom}
+                        src={tramite.adoptador.UsuFotURL}
+                      />
+                      {/* {tramite.adoptador.UsuNom}
+                      </Avatar> */}
                       <div className="adoptTramitList__item-grid-gridItem-name">
-                        {tramit.TraUsuNomAdo}
+                        {tramite.adoptador.UsuNom}
                       </div>
                     </div>
                   </div>
                   <div className="adoptTramitList__item-status">
                     <div className="adoptTramitList__item-status-content">
-                      {tramit.TraEst}
+                      {/* {tramite.adoptador.TraEst} */}
+                      {tramite.TraEst === "P" ? "Pendiente" : "Realizado"}
                     </div>
                   </div>
                   <div className="adoptTramitList__item-date">
-                    {tramit.TraFecDia}/{tramit.TraFecMes}/{tramit.TraFecAno}
+                    {tramite.TraFecDia}/{tramite.TraFecMes}/{tramite.TraFecAno}
                   </div>
                 </div>
               );

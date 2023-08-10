@@ -4,7 +4,7 @@ import FormControl from "@mui/material/FormControl";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, InputLabel, MenuItem, Select } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -16,55 +16,53 @@ import { createUserAsync } from "../../slices/usuarios.slice";
 import { createWalkerAsync } from "../../slices/paseadores.slice";
 import { calificacionesFunctions } from "../../api";
 import { useNavigate } from "react-router-dom";
+import { distritos } from "../../utils/distritos";
 // import { login } from "../../api/user.api";
 const { createCalificacion } = calificacionesFunctions;
 export const UserRegister = () => {
   const [rol, setRol] = useState("usuario");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userCreated = useSelector((state) => state.usuarios.created);
   const walkerCreated = useSelector((state) => state.paseadores.created);
+  const [distrito, setDistrito] = useState();
   const handleRegister = async ({ target }) => {
     console.log(rol);
     const userToRegister = {
-      usuNom: target[2].value,
+      usuNom: `${target[2].value} ${target[4].value}`,
       usuCor: target[6].value,
       usuCon: target[14].value,
-      disCod: 1,
+      disCod: distrito,
       usuFotURL:
-        "https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png",
+        "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
       usuFecNacAno: parseInt(target[10].value.split("-")[0]),
       usuFecNacMes: parseInt(target[10].value.split("-")[1]),
       usuFecNacDia: parseInt(target[10].value.split("-")[2]),
     };
     const walkerToRegister = {
-      pasNom: target[2].value,
+      pasNom: `${target[2].value} ${target[4].value}`,
       pasCor: target[6].value,
       pasCon: target[14].value,
-      disCod: 3,
+      disCod: distrito,
       pasFotURL:
-        "https://w7.pngwing.com/pngs/857/213/png-transparent-man-avatar-user-business-avatar-icon.png",
+        "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
       pasFecNacAno: parseInt(target[10].value.split("-")[0]),
       pasFecNacMes: parseInt(target[10].value.split("-")[1]),
       pasFecNacDia: parseInt(target[10].value.split("-")[2]),
-      pasDes: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-        cursus, odio ac hendrerit rutrum, velit nisi finibus justo, sit
-        amet sollicitudin nisl est at urna. Mauris dapibus justo a
-        consequat feugiat. Nulla a magna luctus, lacinia leo id, hendrerit
-        nulla. Sed eu ultrices ligula. Nullam laoreet, metus id commodo
-        viverra, est libero feugiat neque, nec cursus turpis urna vitae
-        erat. Sed in velit risus. Etiam eget augue vitae risus malesuada
-        viverra. Aliquam id augue ac mauris sagittis semper non a elit.`,
+      pasDes: `¡Hola! Mi nombre es ${target[2].value}`,
       pasDis: "",
     };
     if (rol === "usuario") {
       await dispatch(createUserAsync(userToRegister));
+      // console.log(userToRegister);
     }
     if (rol === "paseador") {
       const [{ CalCod: calCod }] = await createCalificacion();
       dispatch(createWalkerAsync({ ...walkerToRegister, calCod }));
     }
   };
+
   useEffect(() => {
     if (userCreated || walkerCreated) {
       navigate("/login");
@@ -143,13 +141,26 @@ export const UserRegister = () => {
                 type="email"
                 label="Correo electrónico"
               />
-              <TextField
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                type="text"
-                required
-                id="dni"
-                label="Número de DNI"
-              />
+              <FormControl style={{ width: "90%" }}>
+                <InputLabel id="distrito">Distrito:</InputLabel>
+                <Select
+                  labelId="distrito"
+                  id="distrito"
+                  value={distrito}
+                  label="Distrito"
+                  required
+                  onChange={({ target }) => {
+                    setDistrito(target.value);
+                  }}
+                  style={{ textAlign: "left" }}
+                >
+                  {distritos.map((distrito) => (
+                    <MenuItem key={distrito.DisCod} value={distrito.DisCod}>
+                      {distrito.DisNom}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               <TextField
                 required
                 InputLabelProps={{ shrink: true }}
