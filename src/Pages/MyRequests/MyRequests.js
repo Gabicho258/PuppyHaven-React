@@ -20,10 +20,12 @@ import {
 
 export const MyRequests = () => {
   const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
+  const paseador = useSelector((state) => state.paseadores.walker);
+  console.log(paseador);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const paseos = useSelector((state) => state.paseos.paseos);
-  const role = userSession.rol;
+
   useEffect(() => {
     dispatch(getPaseosByWalkerCodeAsync(userSession.id));
   }, []);

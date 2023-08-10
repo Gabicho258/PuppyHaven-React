@@ -21,7 +21,7 @@ export const MyWalks = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const paseos = useSelector((state) => state.paseos.paseos);
-  const role = userSession.rol;
+  const role = userSession?.rol;
   console.log(paseos);
   // const role = "paseador";
 
