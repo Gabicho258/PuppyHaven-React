@@ -28,6 +28,24 @@ th {
     &-avatar {
       margin: 2.5rem;
       font-size: 3rem;
+      &:hover {
+        background-color: #000000;
+        cursor: pointer;
+        &::after {
+          display: flex;
+          position: absolute;
+          text-align: center;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          content: "Editar foto";
+          font-size: 1.5rem;
+          color: white;
+          background-color: #000000;
+          opacity: 0.8;
+        }
+      }
     }
     &-info {
       margin: 1.8rem;
