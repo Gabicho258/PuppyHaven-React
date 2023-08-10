@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -54,6 +54,10 @@ export const WalkerProfileAccount = () => {
     // handleInit();
     console.log(walkerInfo);
   }, []);
+  const [isEditing, setIsEditing] = useState(false);
+  const handleClick = () => {
+    setIsEditing(true);
+  };
   return (
     <>
       <NavBar />
@@ -79,47 +83,55 @@ export const WalkerProfileAccount = () => {
           <hr className="left__divider"></hr>
           <div className="left__description">
             <h4 className="left__description-title">Descripción</h4>
-            <p className="left__description-des">
-              {walker[0]?.PasDes || "El usuario no tiene descripción"}
-            </p>
+            {isEditing ? (
+              <>
+                <div className="left__description-edit">
+                  <textarea className="left__description-edit-textarea"></textarea>
+                  <div className="left__description-edit-btnSection">
+                    <Button
+                      type="submit"
+                      color="success"
+                      variant="contained"
+                      className="left__description-edit-btnSection-btn"
+                    >
+                      Guardar cambios
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="contained"
+                      className="left__description-edit-btnSection-btn"
+                      onClick={() => {
+                        setIsEditing(false);
+                      }}
+                    >
+                      Cancelar
+                    </Button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="left__description-des">
+                  {walker[0]?.PasDes || "El usuario no tiene descripción"}
+                </p>
+              </>
+            )}
           </div>
           <div className="left__button">
-            <Button variant="contained" className="left__button-btn">
-              <strong>Editar Datos</strong>
-            </Button>
+            {isEditing ? (
+              <></>
+            ) : (
+              <Button
+                variant="contained"
+                className="left__button-btn"
+                onClick={handleClick}
+              >
+                <strong>Editar Datos</strong>
+              </Button>
+            )}
           </div>
         </div>
         <div className="right">
-          <table className="right__userAvailability">
-            <thead>
-              <tr>
-                <th>Dias disponibles</th>
-                <th>Horarios disponibles</th>
-              </tr>
-            </thead>
-            <tbody>
-              {walkerAvailability ? (
-                days.map((item) => {
-                  if (walkerAvailability[item] === "") return <></>;
-                  return (
-                    <tr>
-                      <td>{item}</td>
-                      <td>{walkerAvailability[item]}</td>
-                    </tr>
-                  );
-                })
-              ) : (
-                <tr>
-                  <td colSpan={2}>El usuario no tiene horarios disponibles</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-
-          <Button variant="contained" className="right__editButton">
-            <strong>Editar Horarios</strong>
-          </Button>
-
           <div className="right__userCalificationWalker">
             <div className="right__userCalificationWalker-likes">
               <ThumbUpIcon className="right__userCalificationWalker-likes-icon" />
