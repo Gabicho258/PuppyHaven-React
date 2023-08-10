@@ -4,7 +4,7 @@ import FormControl from "@mui/material/FormControl";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, InputLabel, MenuItem, Select } from "@mui/material";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -26,13 +26,14 @@ export const UserRegister = () => {
   const navigate = useNavigate();
   const userCreated = useSelector((state) => state.usuarios.created);
   const walkerCreated = useSelector((state) => state.paseadores.created);
+  const [distrito, setDistrito] = useState();
   const handleRegister = async ({ target }) => {
     console.log(rol);
     const userToRegister = {
       usuNom: `${target[2].value} ${target[4].value}`,
       usuCor: target[6].value,
       usuCon: target[14].value,
-      disCod: 1,
+      disCod: distrito,
       usuFotURL:
         "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
       usuFecNacAno: parseInt(target[10].value.split("-")[0]),
@@ -43,7 +44,7 @@ export const UserRegister = () => {
       pasNom: `${target[2].value} ${target[4].value}`,
       pasCor: target[6].value,
       pasCon: target[14].value,
-      disCod: 3,
+      disCod: distrito,
       pasFotURL:
         "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png",
       pasFecNacAno: parseInt(target[10].value.split("-")[0]),
@@ -54,12 +55,14 @@ export const UserRegister = () => {
     };
     if (rol === "usuario") {
       await dispatch(createUserAsync(userToRegister));
+      // console.log(userToRegister);
     }
     if (rol === "paseador") {
       const [{ CalCod: calCod }] = await createCalificacion();
       dispatch(createWalkerAsync({ ...walkerToRegister, calCod }));
     }
   };
+
   useEffect(() => {
     if (userCreated || walkerCreated) {
       navigate("/login");
@@ -138,13 +141,26 @@ export const UserRegister = () => {
                 type="email"
                 label="Correo electrónico"
               />
-              <TextField
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                type="text"
-                required
-                id="dni"
-                label="Número de DNI"
-              />
+              <FormControl style={{ width: "90%" }}>
+                <InputLabel id="distrito">Distrito:</InputLabel>
+                <Select
+                  labelId="distrito"
+                  id="distrito"
+                  value={distrito}
+                  label="Distrito"
+                  required
+                  onChange={({ target }) => {
+                    setDistrito(target.value);
+                  }}
+                  style={{ textAlign: "left" }}
+                >
+                  {distritos.map((distrito) => (
+                    <MenuItem key={distrito.DisCod} value={distrito.DisCod}>
+                      {distrito.DisNom}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               <TextField
                 required
                 InputLabelProps={{ shrink: true }}
