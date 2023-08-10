@@ -14,7 +14,9 @@ import { loginWalkerAsync } from "../../slices/paseadores.slice";
 import { LoginNotificationError } from "../../Components/LoginNotificationError/LoginNotificationError";
 
 export const UserLogin = () => {
-  const [alert, setAlert] = useState(true);
+  const alertUser = useSelector((state) => state.usuarios.alert);
+  const alertWalker = useSelector((state) => state.paseadores.alert);
+  const [alert, setAlert] = useState(false);
   const [rol, setRol] = useState("usuario");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
@@ -35,20 +37,26 @@ export const UserLogin = () => {
       pasCor: correo,
       pasCon: password,
     };
+
     console.log(userToLogin);
     if (rol === "usuario") {
       await dispatch(loginUserAsync(userToLogin));
     } else {
       await dispatch(loginWalkerAsync(walkerToLogin));
     }
+    setAlert(alertUser || alertWalker);
+    setTimeout(() => {
+      setAlert(false);
+    }, 5000);
   };
   useEffect(() => {
-    console.log(userIsLoggued);
-    console.log(walkerIsLoggued);
-    console.log(userInfoSessionStorage);
     if (userIsLoggued || walkerIsLoggued || userInfoSessionStorage) {
+      setAlert(false);
       navigate("/");
     }
+    setAlert(alertUser || alertWalker);
+    console.log("alertUser", alertUser);
+    console.log("alertWalker", alertWalker);
   }, [userIsLoggued, walkerIsLoggued]);
   return (
     <>

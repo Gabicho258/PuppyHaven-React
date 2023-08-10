@@ -79,7 +79,7 @@ export const AddPet = () => {
               onChange={({ target }) => {
                 setName(target.value);
               }}
-              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              // inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               type="text"
             />
           </div>
@@ -93,7 +93,7 @@ export const AddPet = () => {
               onChange={({ target }) => {
                 setColor(target.value);
               }}
-              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              // inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               type="text"
             />
           </div>
@@ -105,7 +105,7 @@ export const AddPet = () => {
               onChange={({ target }) => {
                 setRace(target.value);
               }}
-              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              // inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               type="text"
             />
           </div>

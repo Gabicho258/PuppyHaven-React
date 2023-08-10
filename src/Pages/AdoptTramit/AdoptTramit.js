@@ -4,14 +4,39 @@ import Avatar from "@mui/material/Avatar";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import "./_AdoptTramit.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { getTramitesByUserAdopterCodeAsync } from "../../slices/tramites.slice";
+import {
+  getTramitesByUserAdopterCodeAsync,
+  updateTramiteAsync,
+} from "../../slices/tramites.slice";
+import { updateMascotaAsync } from "../../slices/mascotas.slice";
 
 export const AdoptTramit = () => {
   const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
   const dispatch = useDispatch();
   const tramites = useSelector((state) => state.tramites.tramites);
+  const user = useSelector((state) => state.usuarios.user);
   console.log(tramites);
-
+  console.log(user);
+  const handleChangeState = async (
+    cod,
+    newUsuCod,
+    { MasCod, MasNom, MasCol, MasRaz, MasEda, MasFotURL, MasDes }
+  ) => {
+    const mascota = {
+      masCod: MasCod,
+      masNom: MasNom,
+      masCol: MasCol,
+      masRaz: MasRaz,
+      masEda: MasEda,
+      masFotURL: MasFotURL,
+      masDes: MasDes,
+      masIsToAdo: false,
+      masUsuCod: newUsuCod,
+    };
+    await dispatch(updateTramiteAsync({ traCod: cod, traEst: "R" }));
+    await dispatch(getTramitesByUserAdopterCodeAsync(userSession.id));
+    await dispatch(updateMascotaAsync(mascota));
+  };
   useEffect(() => {
     dispatch(getTramitesByUserAdopterCodeAsync(userSession.id));
   }, []);
@@ -90,10 +115,27 @@ export const AdoptTramit = () => {
                     </div>
                   </div>
                   <div className="adoptTramitList__item-status">
-                    <div className="adoptTramitList__item-status-content">
-                      {/* {tramite.adoptador.TraEst} */}
-                      {tramite.TraEst === "P" ? "Pendiente" : "Realizado"}
-                    </div>
+                    {user[0]?.UsuNom === tramite.owner.UsuNom &&
+                    tramite.TraEst === "P" ? (
+                      <div
+                        onClick={() =>
+                          handleChangeState(
+                            tramite.TraCod,
+                            tramite.adoptador.UsuCod,
+                            tramite.mascota
+                          )
+                        }
+                        className="adoptTramitList__item-status-content-owner"
+                      >
+                        {/* {tramite.adoptador.TraEst} */}
+                        {tramite.TraEst === "P" ? "Pendiente" : "Realizado"}
+                      </div>
+                    ) : (
+                      <div className="adoptTramitList__item-status-content">
+                        {/* {tramite.adoptador.TraEst} */}
+                        {tramite.TraEst === "P" ? "Pendiente" : "Realizado"}
+                      </div>
+                    )}
                   </div>
                   <div className="adoptTramitList__item-date">
                     {tramite.TraFecDia}/{tramite.TraFecMes}/{tramite.TraFecAno}

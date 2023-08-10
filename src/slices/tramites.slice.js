@@ -7,6 +7,7 @@ const {
   getTramiteByCode,
   getTramitesByUserAdopterCode,
   getTramitesByUserOwnerCode,
+  updateTramite,
 } = tramitesFunctions;
 
 export const getAllTramitesAsync = createAsyncThunk(
@@ -20,6 +21,13 @@ export const createTramiteAsync = createAsyncThunk(
   "tramites/createTramiteAsync",
   async (tramite) => {
     const response = await createTramite(tramite);
+    return response;
+  }
+);
+export const updateTramiteAsync = createAsyncThunk(
+  "tramites/updateTramiteAsync",
+  async (tramite) => {
+    const response = await updateTramite(tramite);
     return response;
   }
 );

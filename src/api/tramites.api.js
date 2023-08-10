@@ -6,6 +6,7 @@ const END_POINTS = {
   GET_BY_CODE: "/tramites/",
   GET_BY_USER_ADOPTER_CODE: "/tramites/adopter/",
   GET_BY_USER_OWNER_CODE: "/tramites/dueno/",
+  UPDATE: "/tramites/update",
 };
 
 export const getAllTramites = async () => {
@@ -27,6 +28,26 @@ export const createTramite = async (tramite) => {
   try {
     const response = await fetch(path, {
       method: "POST",
+      body: JSON.stringify(tramite),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    return data;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export const updateTramite = async (tramite) => {
+  const path = `${API_SERVER}${END_POINTS.UPDATE}`;
+  try {
+    const response = await fetch(path, {
+      method: "PUT",
       body: JSON.stringify(tramite),
       headers: {
         "Content-Type": "application/json",
