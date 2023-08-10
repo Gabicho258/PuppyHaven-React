@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,49 +9,28 @@ import Paper from "@mui/material/Paper";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import Button from "@mui/material/Button";
 import "./_MyWalks.scss";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getPaseosByUserCodeAsync,
+  getPaseosByWalkerCodeAsync,
+} from "../../slices/paseos.slice";
 
 export const MyWalks = () => {
-  // const role = "user";
-  const role = "paseador";
-  const userWalks = [
-    {
-      PasNom: "Carlo Diaz",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasEst: "P",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-    {
-      PasNom: "Carlo Diaz",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasEst: "R",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-    {
-      PasNom: "Carlo Diaz",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasEst: "C",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-    {
-      PasNom: "Carlo Diaz",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasEst: "O",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-  ];
+  const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const paseos = useSelector((state) => state.paseos.paseos);
+  const role = userSession.rol;
+  console.log(paseos);
+  // const role = "paseador";
 
+  useEffect(() => {
+    if (userSession.rol === "usuario")
+      dispatch(getPaseosByUserCodeAsync(userSession.id));
+    if (userSession.rol === "paseador")
+      dispatch(getPaseosByWalkerCodeAsync(userSession.id));
+  }, []);
   return (
     <>
       <NavBar />
@@ -72,7 +51,7 @@ export const MyWalks = () => {
                   align="center"
                   className="myWalksContainer__tableContainer-table-head-cell"
                 >
-                  {role === "user" ? "Paseador" : "Cliente"}
+                  {role === "usuario" ? "Paseador" : "Cliente"}
                 </TableCell>
                 <TableCell
                   align="center"
@@ -90,6 +69,12 @@ export const MyWalks = () => {
                   align="center"
                   className="myWalksContainer__tableContainer-table-head-cell"
                 >
+                  Lugar
+                </TableCell>
+                <TableCell
+                  align="center"
+                  className="myWalksContainer__tableContainer-table-head-cell"
+                >
                   Mascotas
                 </TableCell>
                 <TableCell
@@ -101,39 +86,44 @@ export const MyWalks = () => {
               </TableRow>
             </TableHead>
             <TableBody className="myWalksContainer__tableContainer-table-body">
-              {userWalks.map((walk) => (
+              {paseos.map((paseo) => (
                 <TableRow>
                   <TableCell
                     className="myWalksContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {walk.PasNom}
+                    {role === "usuario" ? paseo.PasNom : paseo.UsuNom}
                   </TableCell>
                   <TableCell
                     className="myWalksContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {walk.PasFecDia}/{walk.PasFecMes}/{walk.PasFecAno}
+                    {paseo.PasFecDia}/{paseo.PasFecMes}/{paseo.PasFecAno}
                   </TableCell>
                   <TableCell
                     className="myWalksContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {walk.PasHor}
+                    {paseo.PasHor}
                   </TableCell>
-
+                  <TableCell
+                    className="myWalksContainer__tableContainer-table-body-cell"
+                    align="left"
+                  >
+                    {paseo.PasDis} - {paseo.PasDir}
+                  </TableCell>
                   <TableCell
                     className="myWalksContainer__tableContainer-table-body-cell"
                     align="left"
                   >
                     <ul className="myWalksContainer__tableContainer-table-body-cell-petList">
-                      {walk.mascotas.map((pet) => {
-                        return <li>{pet}</li>;
+                      {paseo.mascotas.map(({ MasNom }) => {
+                        return <li>{MasNom}</li>;
                       })}
                     </ul>
                   </TableCell>
 
-                  {walk.PasEst === "P" ? (
+                  {paseo.PasEst === "P" ? (
                     <TableCell
                       className="myWalksContainer__tableContainer-table-body-cell-p"
                       align="left"
@@ -143,7 +133,7 @@ export const MyWalks = () => {
                   ) : (
                     <></>
                   )}
-                  {walk.PasEst === "R" ? (
+                  {paseo.PasEst === "R" ? (
                     <TableCell
                       className="myWalksContainer__tableContainer-table-body-cell-r"
                       align="left"
@@ -153,7 +143,7 @@ export const MyWalks = () => {
                   ) : (
                     <></>
                   )}
-                  {walk.PasEst === "C" ? (
+                  {paseo.PasEst === "C" ? (
                     <TableCell
                       className="myWalksContainer__tableContainer-table-body-cell-c"
                       align="left"
@@ -163,7 +153,7 @@ export const MyWalks = () => {
                   ) : (
                     <></>
                   )}
-                  {walk.PasEst === "O" ? (
+                  {paseo.PasEst === "O" ? (
                     <TableCell
                       className="myWalksContainer__tableContainer-table-body-cell-o"
                       align="left"

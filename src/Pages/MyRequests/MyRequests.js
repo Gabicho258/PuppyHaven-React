@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavBar } from "../../Components/NavBar/NavBar";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,71 +11,22 @@ import Button from "@mui/material/Button";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Cancel";
 import "./_MyRequests.scss";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getPaseosByWalkerCodeAsync,
+  updatePaseoAsync,
+} from "../../slices/paseos.slice";
 
 export const MyRequests = () => {
-  const walkerWalks = [
-    {
-      UsuNom: "Edson Lopez",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasDis: "Jose Luis Bustamante y Rivero",
-      PasDir: "Los Girasoles 300",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-    {
-      UsuNom: "Edson Lopez",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasDis: "Jose Luis Bustamante y Rivero",
-      PasDir: "Los Girasoles 300",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-    {
-      UsuNom: "Edson Lopez",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasDis: "Jose Luis Bustamante y Rivero",
-      PasDir: "Los Girasoles 300",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-    {
-      UsuNom: "Edson Lopez",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasDis: "Jose Luis Bustamante y Rivero",
-      PasDir: "Los Girasoles 300",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-    {
-      UsuNom: "Edson Lopez",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasDis: "Jose Luis Bustamante y Rivero",
-      PasDir: "Los Girasoles 300",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-    {
-      UsuNom: "Edson Lopez",
-      PasFecAno: 2023,
-      PasFecMes: 8,
-      PasFecDia: 9,
-      PasHor: "12 pm",
-      PasDis: "Jose Luis Bustamante y Rivero",
-      PasDir: "Los Girasoles 300",
-      mascotas: ["mascota1", "mascota2", "mascota3"],
-    },
-  ];
-
+  const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const paseos = useSelector((state) => state.paseos.paseos);
+  const role = userSession.rol;
+  useEffect(() => {
+    dispatch(getPaseosByWalkerCodeAsync(userSession.id));
+  }, []);
   return (
     <>
       <NavBar />
@@ -132,39 +83,39 @@ export const MyRequests = () => {
               </TableRow>
             </TableHead>
             <TableBody className="myRequestsContainer__tableContainer-table-body">
-              {walkerWalks.map((walk) => (
+              {paseos.map((paseo) => (
                 <TableRow>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {walk.UsuNom}
+                    {paseo.UsuNom}
                   </TableCell>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {walk.PasFecDia}/{walk.PasFecMes}/{walk.PasFecAno}
+                    {paseo.PasFecDia}/{paseo.PasFecMes}/{paseo.PasFecAno}
                   </TableCell>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {walk.PasHor}
+                    {paseo.PasHor}
                   </TableCell>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {walk.PasDis} - {walk.PasDir}
+                    {paseo.PasDis} - {paseo.PasDir}
                   </TableCell>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
                     <ul className="myRequestsContainer__tableContainer-table-body-cell-petList">
-                      {walk.mascotas.map((pet) => {
-                        return <li>{pet}</li>;
+                      {paseo.mascotas.map(({ MasNom }) => {
+                        return <li>{MasNom}</li>;
                       })}
                     </ul>
                   </TableCell>
@@ -177,6 +128,21 @@ export const MyRequests = () => {
                       <Button
                         className="myRequestsContainer__tableContainer-table-body-cell-btn-accept"
                         variant="contained"
+                        onClick={() => {
+                          dispatch(
+                            updatePaseoAsync({
+                              pasNum: paseo.PasNum,
+                              pasEst: "C",
+                            })
+                          );
+                          dispatch(getPaseosByWalkerCodeAsync(userSession.id));
+                        }}
+                        sx={{
+                          "&.Mui-disabled": {
+                            background: "#66c466",
+                          },
+                        }}
+                        disabled={paseo.PasEst !== "P"}
                       >
                         <CheckIcon className="myRequestsContainer__tableContainer-table-body-cell-btn-accept-icon"></CheckIcon>
                         Aceptar
@@ -184,6 +150,21 @@ export const MyRequests = () => {
                       <Button
                         className="myRequestsContainer__tableContainer-table-body-cell-btn-cancel"
                         variant="contained"
+                        onClick={() => {
+                          dispatch(
+                            updatePaseoAsync({
+                              pasNum: paseo.PasNum,
+                              pasEst: "R",
+                            })
+                          );
+                          dispatch(getPaseosByWalkerCodeAsync(userSession.id));
+                        }}
+                        sx={{
+                          "&.Mui-disabled": {
+                            background: "#f57171",
+                          },
+                        }}
+                        disabled={paseo.PasEst !== "P"}
                       >
                         <CancelIcon className="myRequestsContainer__tableContainer-table-body-cell-btn-cancel-icon"></CancelIcon>
                         Rechazar

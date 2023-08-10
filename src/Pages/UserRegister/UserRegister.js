@@ -51,10 +51,7 @@ export const UserRegister = () => {
         cursus, odio ac hendrerit rutrum, velit nisi finibus justo, sit
         amet sollicitudin nisl est at urna. Mauris dapibus justo a
         consequat feugiat. Nulla a magna luctus, lacinia leo id, hendrerit
-        nulla. Sed eu ultrices ligula. Nullam laoreet, metus id commodo
-        viverra, est libero feugiat neque, nec cursus turpis urna vitae
-        erat. Sed in velit risus. Etiam eget augue vitae risus malesuada
-        viverra. Aliquam id augue ac mauris sagittis semper non a elit.`,
+        nulla. Sed eu ultrices ligula. `,
       pasDis: "",
     };
     if (rol === "usuario") {
