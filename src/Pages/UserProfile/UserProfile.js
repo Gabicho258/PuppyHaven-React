@@ -19,15 +19,19 @@ export const UserProfile = () => {
   const user = useSelector((state) => state.usuarios.user);
   const allDistritos = useSelector((state) => state.distritos.allDistritos);
   const mascotas = useSelector((state) => state.mascotas.mascotas);
-  const misMascotas = mascotas.filter((mascota) => mascota.MasIsToAdo === 0);
+  const misMascotas = mascotas.filter(
+    (mascota) => mascota.paraAdopcion === false
+  );
 
   const distrito = allDistritos.filter(
-    (distrito) => user[0]?.distritoId === distrito.id
+    (distrito) => user?.distritoId === distrito.id
   );
+  console.log("user-profile", user);
+  console.log("user-profile", allDistritos);
   const userInfo = [
-    `${new Date().getFullYear() - user[0]?.UsuFecNacAno} años`,
-    user[0]?.UsuCor,
-    distrito[0]?.DisNom,
+    `${new Date().getFullYear() - user?.fechaNacAno} años`,
+    user?.correo,
+    distrito[0]?.nombre,
   ];
   console.log(misMascotas);
   // const walkerAvailability = undefined;
@@ -58,8 +62,7 @@ export const UserProfile = () => {
   ////////
   const handlePhotoEdit = async (usuFotURL) => {
     // await showWidgetPhotoUser();
-    console.log(user[0]);
-    const { UsuCod: usuCod, UsuNom: usuNom, DisCod: disCod } = user[0];
+    const { id: usuCod, nombre: usuNom, distritoId: disCod } = user;
     await dispatch(updateUserAsync({ usuCod, usuNom, disCod, usuFotURL }));
     window.location.reload();
   };
@@ -75,17 +78,17 @@ export const UserProfile = () => {
           <div className="left__user">
             <Avatar
               className="left__user-avatar"
-              alt={user[0]?.UsuNom}
-              src={user[0]?.UsuFotURL}
+              alt={user?.nombre}
+              src={user?.fotoUrl}
               onClick={showWidgetPhotoUser}
               variant="rounded"
               sx={{ width: 200, height: 200 }}
             />
             <div className="left__user-info">
-              <h3 className="left__user-info-name">{user[0]?.UsuNom}</h3>
+              <h3 className="left__user-info-name">{user?.nombre}</h3>
               <ul className="left__user-info-list">
-                {userInfo.map((item) => (
-                  <li>{item}</li>
+                {userInfo.map((item, index) => (
+                  <li key={index}>{item}</li>
                 ))}
               </ul>
             </div>
@@ -113,10 +116,10 @@ export const UserProfile = () => {
           {misMascotas.map((mascota) => (
             <PetCard
               type="edit"
-              petCod={mascota.MasCod}
-              petName={mascota.MasNom}
-              petImageURL={mascota.MasFotURL}
-              petBreed={mascota.MasDes}
+              petCod={mascota.id}
+              petName={mascota.nombre}
+              petImageURL={mascota.fotoUrl}
+              petBreed={mascota.raza}
             />
           ))}
         </div>

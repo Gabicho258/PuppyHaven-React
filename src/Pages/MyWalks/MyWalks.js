@@ -31,6 +31,17 @@ export const MyWalks = () => {
     if (userSession.rol === "paseador")
       dispatch(getPaseosByWalkerCodeAsync(userSession.id));
   }, []);
+  console.log(paseos);
+  if (paseos === undefined) {
+    return (
+      <>
+        <NavBar />
+        <div className="myWalksContainer">
+          <h1>Cargando información de los paseos...</h1>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <NavBar />
@@ -86,44 +97,46 @@ export const MyWalks = () => {
               </TableRow>
             </TableHead>
             <TableBody className="myWalksContainer__tableContainer-table-body">
-              {paseos.map((paseo) => (
+              {paseos?.map((paseo) => (
                 <TableRow>
                   <TableCell
                     className="myWalksContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {role === "usuario" ? paseo.PasNom : paseo.UsuNom}
+                    {role === "usuario"
+                      ? paseo.paseador.nombre
+                      : paseo.usuario.nombre}
                   </TableCell>
                   <TableCell
                     className="myWalksContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {paseo.PasFecDia}/{paseo.PasFecMes}/{paseo.PasFecAno}
+                    {paseo.fechaDia}/{paseo.fechaMes}/{paseo.fechaAno}
                   </TableCell>
                   <TableCell
                     className="myWalksContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {paseo.PasHor}
+                    {paseo.hora}
                   </TableCell>
                   <TableCell
                     className="myWalksContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {paseo.PasDis} - {paseo.PasDir}
+                    {paseo.distrito} - {paseo.direccion}
                   </TableCell>
                   <TableCell
                     className="myWalksContainer__tableContainer-table-body-cell"
                     align="left"
                   >
                     <ul className="myWalksContainer__tableContainer-table-body-cell-petList">
-                      {paseo.mascotas.map(({ MasNom }) => {
-                        return <li>{MasNom}</li>;
+                      {paseo?.paseoMascotas?.map(({ mascota }) => {
+                        return <li key={mascota.id}>{mascota.nombre}</li>;
                       })}
                     </ul>
                   </TableCell>
 
-                  {paseo.PasEst === "P" ? (
+                  {paseo.estado === "P" ? (
                     <TableCell
                       className="myWalksContainer__tableContainer-table-body-cell-p"
                       align="left"
@@ -133,7 +146,7 @@ export const MyWalks = () => {
                   ) : (
                     <></>
                   )}
-                  {paseo.PasEst === "R" ? (
+                  {paseo.estado === "R" ? (
                     <TableCell
                       className="myWalksContainer__tableContainer-table-body-cell-r"
                       align="left"
@@ -143,7 +156,7 @@ export const MyWalks = () => {
                   ) : (
                     <></>
                   )}
-                  {paseo.PasEst === "C" ? (
+                  {paseo.estado === "C" ? (
                     <TableCell
                       className="myWalksContainer__tableContainer-table-body-cell-c"
                       align="left"
@@ -153,7 +166,7 @@ export const MyWalks = () => {
                   ) : (
                     <></>
                   )}
-                  {paseo.PasEst === "O" ? (
+                  {paseo.estado === "O" ? (
                     <TableCell
                       className="myWalksContainer__tableContainer-table-body-cell-o"
                       align="left"

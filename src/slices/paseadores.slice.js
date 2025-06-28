@@ -107,7 +107,7 @@ export const paseadoresSlice = createSlice({
         state.loggued = true;
         sessionStorage.setItem(
           "infoUser",
-          JSON.stringify({ id: action.payload[0].PasCod, rol: "paseador" })
+          JSON.stringify({ id: action.payload.paseador?.id, rol: "paseador" })
         );
       });
   }, //Falta un update y login :)

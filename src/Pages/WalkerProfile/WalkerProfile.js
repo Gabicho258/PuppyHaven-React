@@ -28,19 +28,20 @@ export const WalkerProfile = () => {
     (state) => state.calificaciones.allCalificaciones
   );
   const comentarios = useSelector((state) => state.comentarios.comentarios);
-  const distrito = allDistritos.filter(
-    (distrito) => walker[0]?.DisCod === distrito.DisCod
+  const distrito = allDistritos.find(
+    (distrito) => walker?.distritoId === distrito.id
   );
   const calificacion = allCalificaciones.filter(
-    (calificacion) => walker[0]?.CalCod === calificacion.CalCod
+    (calificacion) => walker?.calificacionId === calificacion.id
   );
+  console.log(walker);
 
-  const likes = calificacion[0]?.CalMeGus;
-  const dislikes = calificacion[0]?.CalNoGus;
+  const likes = calificacion[0]?.meGusta;
+  const dislikes = calificacion[0]?.noGusta;
   const walkerInfo = [
-    `${new Date().getFullYear() - walker[0]?.PasFecNacAno} años`,
-    distrito[0]?.DisNom,
-    walker[0]?.PasCor,
+    `${new Date().getFullYear() - walker?.fechaNacAno} años`,
+    distrito?.nombre,
+    walker?.correo,
   ];
   const walkerAvailability = {
     lunes: "15:00 - 18:00",
@@ -104,13 +105,13 @@ export const WalkerProfile = () => {
           <div className="left__user">
             <Avatar
               className="left__user-avatar"
-              alt={walker[0]?.PasNom}
-              src={walker[0]?.PasFotURL}
+              alt={walker?.nombre}
+              src={walker?.fotoUrl}
               variant="rounded"
               sx={{ width: 200, height: 200 }}
             />
             <div className="left__user-info">
-              <h3 className="left__user-info-name">{walker[0]?.PasNom}</h3>
+              <h3 className="left__user-info-name">{walker?.nombre}</h3>
               <ul className="left__user-info-list">
                 {walkerInfo.map((item) => (
                   <li>{item}</li>
@@ -121,7 +122,7 @@ export const WalkerProfile = () => {
           <hr className="left__divider"></hr>
           <div className="left__description">
             <h4 className="left__description-title">Descripción</h4>
-            <p className="left__description-des">{walker[0]?.PasDes}</p>
+            <p className="left__description-des">{walker?.descripcion}</p>
           </div>
           <div className="left__buttons">
             <Button
@@ -235,16 +236,16 @@ export const WalkerProfile = () => {
                 <p>No hay comentarios</p>
               </div>
             ) : (
-              comentarios.map(({ UsuNom, ComIsLike, ComTex }, i) => {
+              comentarios.map(({ usuario, esLike, texto }, i) => {
                 return (
                   <Comment
                     key={i}
-                    author={UsuNom}
+                    author={usuario.nombre}
                     qualification={{
-                      isLiked: ComIsLike,
-                      isDisliked: !ComIsLike,
+                      isLiked: esLike,
+                      isDisliked: !esLike,
                     }}
-                    comment={ComTex}
+                    comment={texto}
                   />
                 );
               })

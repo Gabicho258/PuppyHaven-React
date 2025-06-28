@@ -22,36 +22,36 @@ export const WalkerProfileAccount = () => {
   const walker = useSelector((state) => state.paseadores.walker);
   const dispatch = useDispatch();
   const allDistritos = useSelector((state) => state.distritos.allDistritos);
-  const [description, setDescription] = useState(walker[0]?.PasDes);
+  const [description, setDescription] = useState(walker?.descripcion);
   const allCalificaciones = useSelector(
     (state) => state.calificaciones.allCalificaciones
   );
   const comentarios = useSelector((state) => state.comentarios.comentarios);
   const distrito = allDistritos.filter(
-    (distrito) => walker[0]?.DisCod === distrito.DisCod
+    (distrito) => walker?.distritoId === distrito.id
   );
   const calificacion = allCalificaciones.filter(
-    (calificacion) => walker[0]?.CalCod === calificacion.CalCod
+    (calificacion) => walker?.calificacionId === calificacion.id
   );
 
   // const distrito = useSelector((state) => state.distritos.distrito);
-  const likes = calificacion[0]?.CalMeGus;
-  const dislikes = calificacion[0]?.CalNoGus;
+  const likes = calificacion[0]?.meGusta;
+  const dislikes = calificacion[0]?.noGusta;
   const walkerInfo = [
-    `${new Date().getFullYear() - walker[0]?.PasFecNacAno} años`,
-    distrito[0]?.DisNom,
-    walker[0]?.PasCor,
+    `${new Date().getFullYear() - walker?.fechaNacAno} años`,
+    distrito[0]?.nombre,
+    walker?.correo,
   ];
   const handleSubmit = async () => {
     const paseadorToEdit = {
-      pasCod: walker[0].PasCod,
-      disCod: walker[0].DisCod,
-      pasFotURL: walker[0].PasFotURL,
+      pasCod: walker?.id,
+      disCod: walker?.distritoId,
+      pasFotURL: walker?.fotoUrl,
       pasDes: description,
-      pasDis: "",
+      pasDis: walker?.disponibilidad,
     };
     await dispatch(updateWalkerAsync(paseadorToEdit));
-    await dispatch(getWalkerByCodeAsync(walker[0]?.PasCod));
+    await dispatch(getWalkerByCodeAsync(walker?.id));
     setIsEditing(false);
   };
   // Cloudinary service
@@ -82,18 +82,18 @@ export const WalkerProfileAccount = () => {
   const handlePhotoEdit = async (pasFotURL) => {
     // await showWidgetPhotoUser();
     const paseadorToEdit = {
-      pasCod: walker[0].PasCod,
-      disCod: walker[0].DisCod,
+      pasCod: walker?.id,
+      disCod: walker?.distritoId,
       pasFotURL: pasFotURL,
       pasDes: description,
       pasDis: "",
     };
     await dispatch(updateWalkerAsync(paseadorToEdit));
-    await dispatch(getWalkerByCodeAsync(walker[0]?.PasCod));
+    await dispatch(getWalkerByCodeAsync(walker?.id));
   };
   const [isEditing, setIsEditing] = useState(false);
   const handleClick = () => {
-    setDescription(walker[0]?.PasDes);
+    setDescription(walker?.descripcion);
     setIsEditing(true);
   };
 
@@ -119,14 +119,14 @@ export const WalkerProfileAccount = () => {
           <div className="left__user">
             <Avatar
               className="left__user-avatar"
-              alt={walker[0]?.PasNom}
-              src={walker[0]?.PasFotURL}
+              alt={walker?.nombre}
+              src={walker?.fotoUrl}
               variant="rounded"
               sx={{ width: 200, height: 200 }}
               onClick={showWidgetPhotoUser}
             />
             <div className="left__user-info">
-              <h3 className="left__user-info-name">{walker[0]?.PasNom}</h3>
+              <h3 className="left__user-info-name">{walker?.nombre}</h3>
               <ul className="left__user-info-list">
                 {walkerInfo.map((item) => (
                   <li>{item}</li>
@@ -177,7 +177,7 @@ export const WalkerProfileAccount = () => {
             ) : (
               <>
                 <p className="left__description-des">
-                  {walker[0]?.PasDes || "El usuario no tiene descripción"}
+                  {walker?.descripcion || "El usuario no tiene descripción"}
                 </p>
               </>
             )}
@@ -201,16 +201,16 @@ export const WalkerProfileAccount = () => {
                 <p>No hay comentarios</p>
               </div>
             ) : (
-              comentarios.map(({ UsuNom, ComIsLike, ComTex }, i) => {
+              comentarios.map(({ usuario, esLike, texto }, i) => {
                 return (
                   <Comment
                     key={i}
-                    author={UsuNom}
+                    author={usuario.nombre}
                     qualification={{
-                      isLiked: ComIsLike,
-                      isDisliked: !ComIsLike,
+                      isLiked: esLike,
+                      isDisliked: !esLike,
                     }}
-                    comment={ComTex}
+                    comment={texto}
                   />
                 );
               })

@@ -58,7 +58,7 @@ export const UserRegister = () => {
       // console.log(userToRegister);
     }
     if (rol === "paseador") {
-      const [{ CalCod: calCod }] = await createCalificacion();
+      const [{ id: calCod }] = await createCalificacion();
       dispatch(createWalkerAsync({ ...walkerToRegister, calCod }));
     }
   };
@@ -155,8 +155,8 @@ export const UserRegister = () => {
                   style={{ textAlign: "left" }}
                 >
                   {distritos.map((distrito) => (
-                    <MenuItem key={distrito.DisCod} value={distrito.DisCod}>
-                      {distrito.DisNom}
+                    <MenuItem key={distrito.id} value={distrito.id}>
+                      {distrito.nombre}
                     </MenuItem>
                   ))}
                 </Select>

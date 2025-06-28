@@ -21,14 +21,26 @@ import {
 export const MyRequests = () => {
   const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
   const paseador = useSelector((state) => state.paseadores.walker);
-  console.log(paseador);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const paseos = useSelector((state) => state.paseos.paseos);
 
+  console.log(paseos);
+
   useEffect(() => {
     dispatch(getPaseosByWalkerCodeAsync(userSession.id));
   }, []);
+
+  if (paseos === undefined) {
+    return (
+      <>
+        <NavBar />
+        <div className="myRequestsContainer">
+          <h1>Cargando información de las solicitudes...</h1>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <NavBar />
@@ -85,39 +97,39 @@ export const MyRequests = () => {
               </TableRow>
             </TableHead>
             <TableBody className="myRequestsContainer__tableContainer-table-body">
-              {paseos.map((paseo) => (
+              {paseos?.map((paseo) => (
                 <TableRow>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {paseo.UsuNom}
+                    {paseo.usuario.nombre}
                   </TableCell>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {paseo.PasFecDia}/{paseo.PasFecMes}/{paseo.PasFecAno}
+                    {paseo.fechaDia}/{paseo.fechaMes}/{paseo.fechaAno}
                   </TableCell>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {paseo.PasHor}
+                    {paseo.hora}
                   </TableCell>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
-                    {paseo.PasDis} - {paseo.PasDir}
+                    {paseo.distrito} - {paseo.direccion}
                   </TableCell>
                   <TableCell
                     className="myRequestsContainer__tableContainer-table-body-cell"
                     align="left"
                   >
                     <ul className="myRequestsContainer__tableContainer-table-body-cell-petList">
-                      {paseo.mascotas.map(({ MasNom }) => {
-                        return <li>{MasNom}</li>;
+                      {paseo?.paseoMascotas.map(({ mascota }) => {
+                        return <li key={mascota.id}>{mascota.nombre}</li>;
                       })}
                     </ul>
                   </TableCell>
@@ -133,7 +145,7 @@ export const MyRequests = () => {
                         onClick={() => {
                           dispatch(
                             updatePaseoAsync({
-                              pasNum: paseo.PasNum,
+                              pasNum: paseo.id,
                               pasEst: "C",
                             })
                           );
@@ -144,7 +156,7 @@ export const MyRequests = () => {
                             background: "#66c466",
                           },
                         }}
-                        disabled={paseo.PasEst !== "P"}
+                        disabled={paseo.estado !== "P"}
                       >
                         <CheckIcon className="myRequestsContainer__tableContainer-table-body-cell-btn-accept-icon"></CheckIcon>
                         Aceptar
@@ -155,7 +167,7 @@ export const MyRequests = () => {
                         onClick={() => {
                           dispatch(
                             updatePaseoAsync({
-                              pasNum: paseo.PasNum,
+                              pasNum: paseo.id,
                               pasEst: "R",
                             })
                           );
@@ -166,7 +178,7 @@ export const MyRequests = () => {
                             background: "#f57171",
                           },
                         }}
-                        disabled={paseo.PasEst !== "P"}
+                        disabled={paseo.estado !== "P"}
                       >
                         <CancelIcon className="myRequestsContainer__tableContainer-table-body-cell-btn-cancel-icon"></CancelIcon>
                         Rechazar

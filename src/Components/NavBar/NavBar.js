@@ -60,12 +60,14 @@ export const NavBar = () => {
                 <Link to="/my-walks">MIS PASEOS</Link>
               </li>
               <li className="nav__ul-li">
-                <span className="nav__ul-li-name">{user[0]?.UsuNom}</span>
+                <span className="nav__ul-li-name">
+                  {user ? user?.nombre : ""}
+                </span>
                 <Avatar
                   className="nav__ul-li-avatar"
                   //   style={{ display: "inline-block" }}
-                  alt={user[0]?.UsuNom}
-                  src={user[0]?.UsuFotURL}
+                  alt={user ? user?.nombre : ""}
+                  src={user ? user?.fotoUrl : ""}
                   onClick={() => navigate("/user-profile")}
                 />
                 <Link className="nav__ul-li-end" onClick={handleEndSession}>
@@ -83,12 +85,14 @@ export const NavBar = () => {
                 <Link to="/my-walks">CITAS</Link>
               </li>
               <li className="nav__ul-li">
-                <span className="nav__ul-li-name">{walker[0]?.PasNom}</span>
+                <span className="nav__ul-li-name">
+                  {walker ? walker?.nombre : ""}
+                </span>
                 <Avatar
                   className="nav__ul-li-avatar"
                   //   style={{ display: "inline-block" }}
-                  alt={walker[0]?.PasNom}
-                  src={walker[0]?.PasFotURL}
+                  alt={walker ? walker?.nombre : ""}
+                  src={walker ? walker?.fotoUrl : ""}
                   onClick={() => navigate("/walker-profile")}
                 />
                 <Link className="nav__ul-li-end" onClick={handleEndSession}>

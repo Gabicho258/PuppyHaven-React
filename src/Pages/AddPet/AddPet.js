@@ -54,11 +54,11 @@ export const AddPet = () => {
       masNom: name,
       masCol: color,
       masRaz: race,
-      masEda: age,
+      masEda: Number(age),
       masFotURL: photoURL,
       masDes: description,
       masIsToAdo: donate,
-      masUsuCod: user[0]?.UsuCod,
+      masUsuCod: user?.id,
     };
     await dispatch(createMascotaAsync(mascota));
     navigate("/user-profile");

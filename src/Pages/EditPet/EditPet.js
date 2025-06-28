@@ -18,25 +18,25 @@ export const EditPet = () => {
   const { id: petID } = useParams();
   const mascotas = useSelector((state) => state.mascotas.mascotas);
   const petToEdit = mascotas.filter(
-    (mascota) => mascota.MasCod === parseInt(petID)
+    (mascota) => mascota.id === parseInt(petID)
   );
   const {
-    MasCod: masCod,
-    MasNom: masNom,
-    MasCol: masCol,
-    MasRaz: masRaz,
-    MasEda: masEda,
-    MasFotURL: masFotURL,
-    MasDes: masDes,
-    MasIsToAdo: masIsToAdo,
-    MasUsuCod: masUsuCod,
+    id: masCod,
+    nombre: masNom,
+    color: masCol,
+    raza: masRaz,
+    edad: masEda,
+    fotoUrl: masFotURL,
+    descripcion: masDes,
+    paraAdopcion: masIsToAdo,
+    usuarioId: masUsuCod,
   } = petToEdit[0];
   const userSession = JSON.parse(sessionStorage.getItem("infoUser"));
   const [color, setColor] = useState(masCol);
   const [race, setRace] = useState(masRaz);
   const [age, setAge] = useState(masEda);
   const [description, setDescription] = useState(masDes);
-  const [donate, setDonate] = useState(masIsToAdo === 0 ? false : true);
+  const [donate, setDonate] = useState(masIsToAdo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [photoURL, setPhotoURL] = useState(masFotURL);

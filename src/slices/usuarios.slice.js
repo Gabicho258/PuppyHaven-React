@@ -109,7 +109,7 @@ export const usuariosSlice = createSlice({
         state.loggued = true;
         sessionStorage.setItem(
           "infoUser",
-          JSON.stringify({ id: action.payload[0]?.UsuCod, rol: "usuario" })
+          JSON.stringify({ id: action.payload.usuario?.id, rol: "usuario" })
         );
       });
   }, //Falta un update y login :)

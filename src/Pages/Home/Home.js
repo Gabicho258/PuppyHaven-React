@@ -16,7 +16,7 @@ export const Home = () => {
   const { paseadores } = useSelector((state) => state.paseadores.allWalkers);
   const { paseos } = useSelector((state) => state.paseos.allPaseos);
   const housedPetsNum = mascotas?.filter(
-    ({ MasIsToAdo }) => MasIsToAdo === 1
+    ({ paraAdopcion }) => paraAdopcion === true
   ).length;
   const adoptions = tramites?.length;
   const walkersNum = paseadores?.length;

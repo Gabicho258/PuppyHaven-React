@@ -9,9 +9,9 @@ import { getAllMascotasAsync } from "../../slices/mascotas.slice";
 
 export const HomeAdoptPet = () => {
   const dispatch = useDispatch();
-  const mascotas = useSelector((state) => state.mascotas.allMascotas);
-  const pets = mascotas.filter((mascota) => mascota.MasIsToAdo === 1);
-  console.log(mascotas);
+  const mascotas = useSelector((state) => state.mascotas.allMascotas).mascotas;
+
+  const pets = mascotas?.filter((mascota) => mascota.paraAdopcion === true);
   useEffect(() => {
     dispatch(getAllMascotasAsync());
   }, []);
@@ -24,12 +24,13 @@ export const HomeAdoptPet = () => {
         </div>
 
         <div className="adoptContainer__cards">
-          {pets.map(({ MasCod, MasNom, MasFotURL, MasRaz }) => (
+          {pets?.map(({ id, nombre, fotoUrl, raza }) => (
             <PetCard
-              petCod={MasCod}
-              petName={MasNom}
-              petImageURL={MasFotURL}
-              petBreed={MasRaz}
+              key={id}
+              petCod={id}
+              petName={nombre}
+              petImageURL={fotoUrl}
+              petBreed={raza}
             />
           ))}
         </div>

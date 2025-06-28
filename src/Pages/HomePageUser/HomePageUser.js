@@ -9,11 +9,24 @@ import { getAllWalkersAsync } from "../../slices/paseadores.slice";
 export const HomePageUser = () => {
   const dispatch = useDispatch();
   //   ============================
-  const walkers = useSelector((state) => state.paseadores.allWalkers);
+
+  const walkers = useSelector(
+    (state) => state.paseadores.allWalkers
+  ).paseadores;
   console.log(walkers);
   useEffect(() => {
     dispatch(getAllWalkersAsync());
   }, []);
+  if (walkers === undefined) {
+    return (
+      <>
+        <NavBar />
+        <div className="walkersContainer">
+          <h1>Cargando información de los paseadores...</h1>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <NavBar />
@@ -25,10 +38,11 @@ export const HomePageUser = () => {
         <div className="walkersContainer__cards">
           {walkers?.map((walker) => (
             <WalkerCard
-              userName={walker.PasNom}
-              userDesc={walker.PasDes}
-              image={walker.PasFotURL}
-              id={walker.PasCod}
+              key={walker.id}
+              userName={walker.nombre}
+              userDesc={walker.descripcion}
+              image={walker.fotoUrl}
+              id={walker.id}
             />
           ))}
         </div>

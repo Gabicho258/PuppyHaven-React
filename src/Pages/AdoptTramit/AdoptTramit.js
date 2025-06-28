@@ -15,8 +15,6 @@ export const AdoptTramit = () => {
   const dispatch = useDispatch();
   const tramites = useSelector((state) => state.tramites.tramites);
   const user = useSelector((state) => state.usuarios.user);
-  console.log(tramites);
-  console.log(user);
   const handleChangeState = async (
     cod,
     newUsuCod,
@@ -37,6 +35,7 @@ export const AdoptTramit = () => {
     await dispatch(getTramitesByUserAdopterCodeAsync(userSession.id));
     await dispatch(updateMascotaAsync(mascota));
   };
+  console.log(tramites);
   useEffect(() => {
     dispatch(getTramitesByUserAdopterCodeAsync(userSession.id));
   }, []);
@@ -47,11 +46,11 @@ export const AdoptTramit = () => {
       <div className="adoptTramitList">
         {tramites.length !== 0 ? (
           <>
-            {tramites.map((tramite) => {
+            {tramites?.map((tramite) => {
               return (
-                <div className="adoptTramitList__item">
+                <div className="adoptTramitList__item" key={tramite.id}>
                   <div className="adoptTramitList__item-code">
-                    Código de trámite: {tramite.TraCod}
+                    Código de trámite: {tramite.id}
                   </div>
                   <div className="adoptTramitList__item-grid">
                     <div className="adoptTramitList__item-grid-gridItem">
@@ -59,13 +58,13 @@ export const AdoptTramit = () => {
                         sx={{ bgcolor: "#202124" }}
                         variant="rounded"
                         className="adoptTramitList__item-grid-gridItem-avatar"
-                        alt={tramite.owner.UsuNom}
-                        src={tramite.owner.UsuFotURL}
+                        alt={tramite.dueno?.nombre}
+                        src={tramite.dueno?.fotoUrl}
                       />
                       {/* {tramite.owner.UsuNom} */}
                       {/* </Avatar> */}
                       <div className="adoptTramitList__item-grid-gridItem-name">
-                        {tramite.owner.UsuNom}
+                        {tramite.dueno?.nombre}
                       </div>
                     </div>
                     <DoubleArrowIcon className="adoptTramitList__item-grid-doubleArrow" />
@@ -74,25 +73,25 @@ export const AdoptTramit = () => {
                         sx={{ bgcolor: "#202124" }}
                         variant="rounded"
                         className="adoptTramitList__item-grid-gridItem-avatar"
-                        alt={tramite.mascota.MasNom}
-                        src={tramite.mascota.MasFotURL}
+                        alt={tramite.mascota?.nombre}
+                        src={tramite.mascota?.fotoUrl}
                       >
-                        {tramite.mascota.MasNom}
+                        {tramite.mascota?.nombre}
                       </Avatar>
                       <div className="adoptTramitList__item-grid-gridItem-info">
                         <div className="adoptTramitList__item-grid-gridItem-info-name">
-                          {tramite.mascota.MasNom}
+                          {tramite.mascota?.nombre}
                         </div>
                         <div className="adoptTramitList__item-grid-gridItem-info-description">
                           <ul className="adoptTramitList__item-grid-gridItem-info-description-list">
                             <li className="adoptTramitList__item-grid-gridItem-info-description-list-item">
-                              Color: {tramite.mascota.MasCol}
+                              Color: {tramite.mascota?.color}
                             </li>
                             <li className="adoptTramitList__item-grid-gridItem-info-description-list-item">
-                              Raza: {tramite.mascota.MasRaz}
+                              Raza: {tramite.mascota?.raza}
                             </li>
                             <li className="adoptTramitList__item-grid-gridItem-info-description-list-item">
-                              Edad: {tramite.mascota.MasEda} años
+                              Edad: {tramite.mascota?.edad} años
                             </li>
                           </ul>
                         </div>
@@ -104,41 +103,41 @@ export const AdoptTramit = () => {
                         sx={{ bgcolor: "#202124" }}
                         variant="rounded"
                         className="adoptTramitList__item-grid-gridItem-avatar"
-                        alt={tramite.adoptador.UsuNom}
-                        src={tramite.adoptador.UsuFotURL}
+                        alt={user?.nombre}
+                        src={user?.fotoUrl}
                       />
-                      {/* {tramite.adoptador.UsuNom}
+                      {/* {user.UsuNom}
                       </Avatar> */}
                       <div className="adoptTramitList__item-grid-gridItem-name">
-                        {tramite.adoptador.UsuNom}
+                        {user?.nombre}
                       </div>
                     </div>
                   </div>
                   <div className="adoptTramitList__item-status">
-                    {user[0]?.UsuNom === tramite.owner.UsuNom &&
-                    tramite.TraEst === "P" ? (
+                    {user?.nombre === tramite?.dueno?.nombre &&
+                    tramite.estado === "P" ? (
                       <div
                         onClick={() =>
                           handleChangeState(
-                            tramite.TraCod,
-                            tramite.adoptador.UsuCod,
+                            tramite.id,
+                            user.id,
                             tramite.mascota
                           )
                         }
                         className="adoptTramitList__item-status-content-owner"
                       >
                         {/* {tramite.adoptador.TraEst} */}
-                        {tramite.TraEst === "P" ? "Pendiente" : "Realizado"}
+                        {tramite.estado === "P" ? "Pendiente" : "Realizado"}
                       </div>
                     ) : (
                       <div className="adoptTramitList__item-status-content">
                         {/* {tramite.adoptador.TraEst} */}
-                        {tramite.TraEst === "P" ? "Pendiente" : "Realizado"}
+                        {tramite.estado === "P" ? "Pendiente" : "Realizado"}
                       </div>
                     )}
                   </div>
                   <div className="adoptTramitList__item-date">
-                    {tramite.TraFecDia}/{tramite.TraFecMes}/{tramite.TraFecAno}
+                    {tramite.fechaDia}/{tramite.fechaMes}/{tramite.fechaAno}
                   </div>
                 </div>
               );

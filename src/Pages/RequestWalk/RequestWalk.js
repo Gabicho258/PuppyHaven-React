@@ -34,24 +34,26 @@ export const RequestWalk = () => {
   const walker = useSelector((state) => state.paseadores.walker);
   const allDistritos = useSelector((state) => state.distritos.allDistritos);
   const mascotas = useSelector((state) => state.mascotas.mascotas);
-  const misMascotas = mascotas.filter((mascota) => mascota.MasIsToAdo === 0);
+  const misMascotas = mascotas.filter(
+    (mascota) => mascota.paraAdopcion === false
+  );
 
   const allCalificaciones = useSelector(
     (state) => state.calificaciones.allCalificaciones
   );
   const distrito = allDistritos.filter(
-    (distrito) => walker[0]?.distritoId === distrito.id
+    (distrito) => walker?.distritoId === distrito.id
   );
   const calificacion = allCalificaciones.filter(
-    (calificacion) => walker[0]?.CalCod === calificacion.CalCod
+    (calificacion) => walker?.calificacionId === calificacion.id
   );
-  const likes = calificacion[0]?.CalMeGus;
-  const dislikes = calificacion[0]?.CalNoGus;
+  const likes = calificacion[0]?.meGusta;
+  const dislikes = calificacion[0]?.noGusta;
   const info = {
-    walkerName: walker[0]?.PasNom,
-    walkerDistrict: distrito[0]?.DisNom,
-    walkerEmail: walker[0]?.PasCor,
-    walkerAge: new Date().getFullYear() - walker[0]?.PasFecNacAno,
+    walkerName: walker?.nombre,
+    walkerDistrict: distrito[0]?.nombre,
+    walkerEmail: walker?.correo,
+    walkerAge: new Date().getFullYear() - walker?.fechaNacAno,
     walkerLikes: likes,
     walkerDislikes: dislikes,
     userPets: misMascotas,
@@ -59,17 +61,17 @@ export const RequestWalk = () => {
   const handleRequestWalk = async () => {
     const dateNow = date.split("-");
     const paseo = {
-      pasCod: id,
+      pasCod: Number(id),
       usuCod: userSession.id,
       pasDis: district,
       pasDir: reference,
-      pasFecAno: dateNow[0],
-      pasFecMes: dateNow[1],
-      pasFecDia: dateNow[2],
+      pasFecAno: Number(dateNow[0]),
+      pasFecMes: Number(dateNow[1]),
+      pasFecDia: Number(dateNow[2]),
       pasHor: time,
-      pasCanHor: walkHours,
+      pasCanHor: Number(walkHours),
       pasEst: "P",
-      mascotas: selectedPets.map((pet) => pet.MasCod),
+      mascotas: selectedPets.map((pet) => pet.id),
     };
     console.log(paseo);
     await dispatch(createPaseoAsync(paseo));
@@ -88,7 +90,7 @@ export const RequestWalk = () => {
           <div className="requestWalkGrid__left-walkerInfo">
             <Avatar
               sx={{ bgcolor: "#202124" }}
-              src={walker[0]?.PasFotURL}
+              src={walker?.fotoUrl}
               variant="rounded"
               className="requestWalkGrid__left-walkerInfo-avatar"
             >
@@ -218,12 +220,12 @@ export const RequestWalk = () => {
                         onClick={({ target }) => {
                           if (
                             selectedPets.some(
-                              (pet) => pet.MasNom === mascota.MasNom
+                              (pet) => pet.nombre === mascota.nombre
                             )
                           ) {
                             setSelectedPets(
                               selectedPets.filter(
-                                (pet) => pet.MasNom !== mascota.MasNom
+                                (pet) => pet.nombre !== mascota.nombre
                               )
                             );
                           }
@@ -231,7 +233,7 @@ export const RequestWalk = () => {
                         }}
                       />
                     }
-                    label={mascota.MasNom}
+                    label={mascota.nombre}
                   />
                 );
               })}
