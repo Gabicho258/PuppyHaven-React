@@ -40,7 +40,7 @@ export const RequestWalk = () => {
     (state) => state.calificaciones.allCalificaciones
   );
   const distrito = allDistritos.filter(
-    (distrito) => walker[0]?.DisCod === distrito.DisCod
+    (distrito) => walker[0]?.distritoId === distrito.id
   );
   const calificacion = allCalificaciones.filter(
     (calificacion) => walker[0]?.CalCod === calificacion.CalCod

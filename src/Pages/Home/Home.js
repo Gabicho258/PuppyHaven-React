@@ -11,16 +11,16 @@ import { getAllPaseosAsync } from "../../slices/paseos.slice";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const mascotas = useSelector((state) => state.mascotas.allMascotas);
-  const tramites = useSelector((state) => state.tramites.allTramites);
-  const paseadores = useSelector((state) => state.paseadores.allWalkers);
-  const paseos = useSelector((state) => state.paseos.allPaseos);
-  const housedPetsNum = mascotas.filter(
+  const { mascotas } = useSelector((state) => state.mascotas.allMascotas);
+  const { tramites } = useSelector((state) => state.tramites.allTramites);
+  const { paseadores } = useSelector((state) => state.paseadores.allWalkers);
+  const { paseos } = useSelector((state) => state.paseos.allPaseos);
+  const housedPetsNum = mascotas?.filter(
     ({ MasIsToAdo }) => MasIsToAdo === 1
   ).length;
-  const adoptions = tramites.length;
-  const walkersNum = paseadores.length;
-  const walksNum = paseos.length;
+  const adoptions = tramites?.length;
+  const walkersNum = paseadores?.length;
+  const walksNum = paseos?.length;
   useEffect(() => {
     dispatch(getAllMascotasAsync());
     dispatch(getAllTramitesAsync());

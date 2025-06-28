@@ -22,7 +22,7 @@ export const UserProfile = () => {
   const misMascotas = mascotas.filter((mascota) => mascota.MasIsToAdo === 0);
 
   const distrito = allDistritos.filter(
-    (distrito) => user[0]?.DisCod === distrito.DisCod
+    (distrito) => user[0]?.distritoId === distrito.id
   );
   const userInfo = [
     `${new Date().getFullYear() - user[0]?.UsuFecNacAno} años`,

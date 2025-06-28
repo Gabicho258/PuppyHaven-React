@@ -20,7 +20,7 @@ export const ConfirmAdoptPet = () => {
   );
   const allDistritos = useSelector((state) => state.distritos.allDistritos);
   const distrito = allDistritos.filter(
-    (distrito) => user[0]?.DisCod === distrito.DisCod
+    (distrito) => user[0]?.distritoId === distrito.id
   );
   const {
     MasCod: masCod,
