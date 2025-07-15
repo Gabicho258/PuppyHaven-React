@@ -67,6 +67,13 @@ export const EditPet = () => {
   ////////
 
   const handleSubmit = async () => {
+    if (
+      donate &&
+      !window.confirm("¿Estás segur@ en dar en adopción a tu mascota?")
+    ) {
+      return;
+    }
+
     const mascota = {
       masCod,
       masNom,

@@ -28,6 +28,10 @@ export const UserRegister = () => {
   const walkerCreated = useSelector((state) => state.paseadores.created);
   const [distrito, setDistrito] = useState();
   const handleRegister = async ({ target }) => {
+    if (target[14].value.length < 6) {
+      alert("La contraseña debe tener mínimo 6 caracteres");
+      return;
+    }
     console.log(rol);
     const userToRegister = {
       usuNom: `${target[2].value} ${target[4].value}`,
@@ -62,7 +66,7 @@ export const UserRegister = () => {
       dispatch(createWalkerAsync({ ...walkerToRegister, calCod }));
     }
   };
-
+  console.log(distritos);
   useEffect(() => {
     if (userCreated || walkerCreated) {
       navigate("/login");
@@ -154,9 +158,9 @@ export const UserRegister = () => {
                   }}
                   style={{ textAlign: "left" }}
                 >
-                  {distritos.map((distrito) => (
-                    <MenuItem key={distrito.id} value={distrito.id}>
-                      {distrito.nombre}
+                  {distritos?.map((distrito) => (
+                    <MenuItem key={distrito.DisCod} value={distrito.DisCod}>
+                      {distrito.DisNom}
                     </MenuItem>
                   ))}
                 </Select>

@@ -2,6 +2,7 @@ export const cloudinaryService = (upload_preset) => {
   return {
     cloudName: "hotelapp",
     uploadPreset: upload_preset,
+    resourceType: "image",
     sources: ["local"],
     showAdvancedOptions: false,
     defaultSource: "local",
